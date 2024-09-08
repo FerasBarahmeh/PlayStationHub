@@ -1,0 +1,6 @@
+@PlayStationHub_HostAddress = http://localhost:5110
+
+GET {{PlayStationHub_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

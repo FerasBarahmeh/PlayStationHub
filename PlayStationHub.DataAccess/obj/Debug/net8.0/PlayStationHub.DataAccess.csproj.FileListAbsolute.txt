@@ -1,0 +1,24 @@
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.deps.json
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.AssemblyInfoInputs.cache
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.AssemblyInfo.cs
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.csproj.CoreCompileInputs.cache
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\refint\PlayStationHub.DataAccess.dll
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\ref\PlayStationHub.DataAccess.dll
+C:\Container\PlayStation Club\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.csproj.AssemblyReference.cache
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.deps.json
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\bin\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.csproj.AssemblyReference.cache
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.AssemblyInfoInputs.cache
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.AssemblyInfo.cs
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.csproj.CoreCompileInputs.cache
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\refint\PlayStationHub.DataAccess.dll
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\ref\PlayStationHub.DataAccess.dll

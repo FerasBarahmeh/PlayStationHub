@@ -1,0 +1,30 @@
+C:\Container\PlayStation Club\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.deps.json
+C:\Container\PlayStation Club\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.dll
+C:\Container\PlayStation Club\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.pdb
+C:\Container\PlayStation Club\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStation Club\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.AssemblyReference.cache
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.AssemblyInfoInputs.cache
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.AssemblyInfo.cs
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.CoreCompileInputs.cache
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.CopyComplete
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.dll
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\refint\PlayStationHub.Business.dll
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.pdb
+C:\Container\PlayStation Club\PlayStationHub.Business\obj\Debug\net8.0\ref\PlayStationHub.Business.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.deps.json
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.Business.pdb
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DataAccess.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DataAccess.pdb
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.AssemblyReference.cache
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.AssemblyInfoInputs.cache
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.AssemblyInfo.cs
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.CoreCompileInputs.cache
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.csproj.CopyComplete
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\refint\PlayStationHub.Business.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.pdb
+C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\ref\PlayStationHub.Business.dll
