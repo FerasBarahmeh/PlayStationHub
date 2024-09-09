@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
-using PlayStationHub.Business.DataTransferObject;
+using PlayStationHub.Business.DataTransferObject.Users;
+using PlayStationHub.Business.DataTransferObject.Users.Requests;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Net;
 using Utilities.Response;
@@ -11,7 +13,7 @@ namespace PlayStationHub.API.Controllers.Users;
 [ApiController]
 public class UsersController : BaseController<IUserService>
 {
-    public UsersController(IUserService service) : base(service) { }
+    public UsersController(IUserService service, IMapper mapper) : base(service, mapper) { }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> All()
@@ -44,5 +46,15 @@ public class UsersController : BaseController<IUserService>
             throw;
         }
 
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Insert(InsertUserRequest user)
+    {
+        _Service.UserModel = _Mapper.Map<UserDTO>(user);
+        _Service.Password = user.Password;
+
+        var value = await _Service.SaveAsync();
+        return Ok(new { Value = value });
     }
 }
