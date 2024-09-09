@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject;
 using PlayStationHub.Business.Interfaces.Services;
+using System.Net;
 using Utilities.Response;
 
 namespace PlayStationHub.API.Controllers.Users;
@@ -26,4 +28,21 @@ public class UsersController : BaseController<IUserService>
             ));
     }
 
+    [HttpGet("Find/{ID}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> Find(int ID)
+    {
+        var user = await _Service.FindAsync(ID);
+        try
+        {
+            if (user == null) return NotFound(new NullableResponseData(HttpStatusCode.BadRequest, "Not found this user in our credentials"));
+            return Ok(new ResponseOutcome<UserDTO>(data: user, HttpStatusCode.OK, message: "Success fetch user"));
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            throw;
+        }
+
+    }
 }

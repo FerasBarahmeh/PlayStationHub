@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using PlayStationHub.DataAccess.Interfaces.Repositories;
 
 namespace PlayStationHub.Business.Services;
 
-public abstract class BaseService
+public abstract class BaseService<T>
 {
-    protected readonly IUserRepository _UserRepository;
+    protected readonly T _Repository;
     protected IMapper _Mapper { get; set; }
-    public BaseService(IUserRepository userRepository, IMapper mapper)
+    public BaseService(T Repository, IMapper mapper)
     {
-        _UserRepository = userRepository;
+        _Repository = Repository;
         _Mapper = mapper;
     }
 }

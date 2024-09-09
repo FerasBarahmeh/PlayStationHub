@@ -5,17 +5,15 @@ namespace PlayStationHub.DataAccess.Repositories;
 
 public abstract class BaseRepository<T>
 {
-    protected delegate T ImplementExecuteReaderAsyncStructure();
-
     protected readonly string _ConnectionString;
     public BaseRepository(IConfiguration configuration)
     {
         _ConnectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    public virtual async Task<IEnumerable<T>> ReaderAllRecordsAsync(string Query, Func<SqlDataReader, T> Logic)
+    public async Task<IEnumerable<T>> PredicateExecuteReaderAsync(string Query, Func<SqlDataReader, T> Logic)
     {
-        List<T> Users = new List<T>();
+        List<T> Records = new List<T>();
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand(Query, conn))
@@ -23,14 +21,53 @@ public abstract class BaseRepository<T>
                 await conn.OpenAsync();
                 using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
-                        T user = Logic(reader);
-                        Users.Add(user);
+                        T record = Logic(reader);
+                        Records.Add(record);
                     }
                 }
             }
         }
-        return Users;
+        return Records;
+    }
+    public async Task<T> PredicateExecuteReaderForOneRecordAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
+    {
+        T Record = default;
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParameters(cmd);
+                await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Record = Logic(reader);
+                    }
+                }
+            }
+        }
+        return Record;
+    }
+
+    public async Task<ReturnType> PredicateExecuteScalar<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
+    {
+        ReturnType Result = default;
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParameters(cmd);
+                await conn.OpenAsync();
+                object ScalerResult = await cmd.ExecuteScalarAsync();
+
+                if (ScalerResult != null && ScalerResult != DBNull.Value)
+                    Result = (ReturnType)Convert.ChangeType(ScalerResult, typeof(ReturnType));
+
+            }
+        }
+        return Result;
     }
 }
