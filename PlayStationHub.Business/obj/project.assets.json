@@ -703,6 +703,16 @@
         "runtime": {
           "bin/placeholder/PlayStationHub.DataAccess.dll": {}
         }
+      },
+      "Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Utilities.dll": {}
+        }
       }
     }
   },
@@ -1953,12 +1963,18 @@
       "type": "project",
       "path": "../PlayStationHub.DataAccess/PlayStationHub.DataAccess.csproj",
       "msbuildProject": "../PlayStationHub.DataAccess/PlayStationHub.DataAccess.csproj"
+    },
+    "Utilities/1.0.0": {
+      "type": "project",
+      "path": "../Utilities/Utilities.csproj",
+      "msbuildProject": "../Utilities/Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "AutoMapper >= 13.0.1",
-      "PlayStationHub.DataAccess >= 1.0.0"
+      "PlayStationHub.DataAccess >= 1.0.0",
+      "Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1990,6 +2006,9 @@
           "projectReferences": {
             "C:\\Container\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj": {
               "projectPath": "C:\\Container\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj"
+            },
+            "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj": {
+              "projectPath": "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj"
             }
           }
         }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
+using System.Data;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
@@ -38,6 +39,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         return await PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE ID=@ID;", async (SqlCommand cmd) =>
         {
             cmd.Parameters.AddWithValue("@ID", ID);
+            await Task.CompletedTask;
         });
     }
 
@@ -77,6 +79,19 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         return await _FindAsyncStructure(Query, async (cmd) =>
         {
             cmd.Parameters.AddWithValue("@Username", Username);
+            await Task.CompletedTask;
+        });
+    }
+
+    public async Task<int> InsertAsync(User user)
+    {
+        return await PredicateExecuteScalar<int>("SP_InsertUser", async (SqlCommand cmd) =>
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Username", user.Username);
+            cmd.Parameters.AddWithValue("@Phone", user.Phone);
+            cmd.Parameters.AddWithValue("@Email", user.Email);
+            cmd.Parameters.AddWithValue("@Password", user.Password);
             await Task.CompletedTask;
         });
     }

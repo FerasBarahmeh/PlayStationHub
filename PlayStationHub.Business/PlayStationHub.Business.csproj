@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PlayStationHub.DataAccess\PlayStationHub.DataAccess.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

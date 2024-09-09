@@ -9,7 +9,8 @@
       "PlayStationHub.Business/1.0.0": {
         "dependencies": {
           "AutoMapper": "13.0.1",
-          "PlayStationHub.DataAccess": "1.0.0"
+          "PlayStationHub.DataAccess": "1.0.0",
+          "Utilities": "1.0.0"
         },
         "runtime": {
           "PlayStationHub.Business.dll": {}
@@ -443,6 +444,11 @@
         "runtime": {
           "PlayStationHub.DataAccess.dll": {}
         }
+      },
+      "Utilities/1.0.0": {
+        "runtime": {
+          "Utilities.dll": {}
+        }
       }
     }
   },
@@ -733,6 +739,11 @@
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
     "PlayStationHub.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Utilities/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -29,3 +29,5 @@ C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\refint\Play
 C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.pdb
 C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\ref\PlayStationHub.Business.dll
 C:\Container\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.sourcelink.json
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\Utilities.dll
+C:\Container\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\Utilities.pdb

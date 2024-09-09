@@ -1,14 +1,37 @@
 ﻿using AutoMapper;
-using PlayStationHub.Business.DataTransferObject;
+using PlayStationHub.Business.DataTransferObject.Users;
+using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.DataAccess.Entities;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
+using Utilities.Security;
 
 namespace PlayStationHub.Business.Services;
 
 public class UserService : BaseService<IUserRepository>, IUserService
 {
+    public ModeStatus Mode => (UserModel.ID == null) ? ModeStatus.Insert : ModeStatus.Update;
+    public UserDTO UserModel { get; set; }
+    private string _Password;
+    public string Password
+    {
+        get
+        {
+            if (_Password != null)
+                return Hashing.Hash(_Password);
+            return null;
+        }
+        set
+        {
+            if (Mode == ModeStatus.Insert)
+            {
+                _Password = value;
+                return;
+            }
+            _Password = null;
+        }
+    }
     public UserService(IUserRepository repo, IMapper map) : base(repo, map) { }
-
     public async Task<IEnumerable<UserDTO>> AllAsync()
     {
         var users = await _Repository.AllAsync();
@@ -32,5 +55,23 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         var user = await _Repository.FindAsync(ID);
         return _Mapper.Map<UserDTO>(user);
+    }
+
+    public async Task<bool> SaveAsync()
+    {
+        if (Mode == ModeStatus.Insert)
+        {
+            var userForCreationDto = _Mapper.Map<UserForCreationDTO>(UserModel);
+
+            userForCreationDto.Password = Password;
+
+            int? ID = await _Repository.InsertAsync(_Mapper.Map<User>(userForCreationDto));
+            if (ID == null) return false;
+
+            UserModel.ID = ID;
+            return ID != null;
+        }
+        return false;
+
     }
 }

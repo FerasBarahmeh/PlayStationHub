@@ -9,4 +9,5 @@ public interface IUserRepository
     Task<bool> IsExistAsync(int ID);
     Task<User> FindAsync(int ID);
     Task<User> FindAsync(string Username);
+    Task<int> InsertAsync(User UserInsertField);
 }
