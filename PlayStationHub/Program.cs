@@ -10,12 +10,6 @@ builder.Services.AddControllers()
     {
         fv.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
         fv.DisableDataAnnotationsValidation = true;
-
-        // Optional: Disable automatic child property validation (disabled by default)
-        // fv.ImplicitlyValidateChildProperties = false;
-
-        // Optional: Disable implicit root collection element validation (disabled by default)
-        // fv.ImplicitlyValidateRootCollectionElements = false;
     });
 
 

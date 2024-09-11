@@ -1,20 +1,19 @@
 ﻿using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Enums;
+using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Async;
+using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Sync;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
-public interface IUserService
+public interface IUserService : IAllAsync<UserDTO>, IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync, IIsExist
 {
     public ModeStatus Mode { get; }
     public string Password { get; set; }
     UserDTO UserModel { get; set; }
-    Task<IEnumerable<UserDTO>> AllAsync();
     Task<bool> IsExistAsync(string Username);
     bool IsExist(string Username);
-    bool IsExist(int ID);
-    Task<bool> IsExistAsync(int ID);
     Task<UserDTO> FindAsync(string Username);
-    Task<UserDTO> FindAsync(int ID);
+
     Task<bool> SaveAsync();
-    Task<bool> DeleteAsync(int ID);
+
 }

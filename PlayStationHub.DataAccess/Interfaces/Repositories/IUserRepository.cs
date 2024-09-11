@@ -1,16 +1,11 @@
 ﻿using PlayStationHub.DataAccess.Entities;
+using PlayStationHub.DataAccess.Interfaces.Repositories.BasicOperation;
 
 namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IBaseBasicOperationRepository<User>
 {
-    Task<IEnumerable<User>> AllAsync();
+    Task<User> FindAsync(string Username);
     Task<bool> IsExistAsync(string Username);
     bool IsExist(string Username);
-    bool IsExist(int ID);
-    Task<bool> IsExistAsync(int ID);
-    Task<User> FindAsync(int ID);
-    Task<User> FindAsync(string Username);
-    Task<int> InsertAsync(User UserInsertField);
-    Task<int> DeleteAsync(int ID);
 }
