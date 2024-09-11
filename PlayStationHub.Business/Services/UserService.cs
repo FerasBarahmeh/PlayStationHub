@@ -78,4 +78,14 @@ public class UserService : BaseService<IUserRepository>, IUserService
         return false;
 
     }
+
+    public async Task<bool> DeleteAsync(int ID)
+    {
+        return await _Repository.DeleteAsync(ID) > 0;
+    }
+
+    public bool IsExist(int ID)
+    {
+        return _Repository.IsExist(ID);
+    }
 }

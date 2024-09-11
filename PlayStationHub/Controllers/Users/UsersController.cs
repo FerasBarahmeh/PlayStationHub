@@ -60,4 +60,15 @@ public class UsersController : BaseController<IUserService>
             return Ok(new ResponseOutcome<int>(_Service.UserModel.ID, HttpStatusCode.Created, $"Success create new use has {_Service.UserModel.ID} identifier"));
         return StatusCode((int)HttpStatusCode.InternalServerError, "Some error according, try again later");
     }
+
+    [HttpDelete("{ID}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> Delete(int ID)
+    {
+        if (await _Service.DeleteAsync(ID))
+            return Ok(new ResponseOutcome<bool>(data: true, status: HttpStatusCode.OK, message: $"Successfully deleted user with ID {ID}."));
+
+        return StatusCode((int)HttpStatusCode.InternalServerError, "User not found or could not be deleted.");
+    }
+
 }

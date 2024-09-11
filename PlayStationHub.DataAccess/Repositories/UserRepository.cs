@@ -103,4 +103,23 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
+
+    public Task<int> DeleteAsync(int ID)
+    {
+        return PredicateExecuteNonQuery("SP_DeleteUserByID", async (SqlCommand cmd) =>
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ID", ID);
+            await Task.CompletedTask;
+        });
+    }
+
+    public bool IsExist(int ID)
+    {
+        return PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE ID=@ID;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@ID", ID);
+            await Task.CompletedTask;
+        });
+    }
 }

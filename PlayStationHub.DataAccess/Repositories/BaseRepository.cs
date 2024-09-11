@@ -90,4 +90,19 @@ public abstract class BaseRepository<T>
         return result;
     }
 
+    public async Task<int> PredicateExecuteNonQuery(string Query, Func<SqlCommand, Task> SetParams)
+    {
+        int RowAffected = 0;
+
+        await using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParams(cmd);
+                await conn.OpenAsync();
+                RowAffected = await cmd.ExecuteNonQueryAsync();
+            }
+        }
+        return RowAffected;
+    }
 }
