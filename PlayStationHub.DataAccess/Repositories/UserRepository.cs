@@ -28,7 +28,15 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<bool> IsExistAsync(string Username)
     {
-        return await PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE Username=@Username;", async (SqlCommand cmd) =>
+        return await PredicateExecuteScalarAsync<bool>("SELECT Founded = 1 FROM Users WhERE Username=@Username;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@Username", Username);
+            await Task.CompletedTask;
+        });
+    }
+    public bool IsExist(string Username)
+    {
+        return PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE Username=@Username;", async (SqlCommand cmd) =>
         {
             cmd.Parameters.AddWithValue("@Username", Username);
             await Task.CompletedTask;
@@ -36,7 +44,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     }
     public async Task<bool> IsExistAsync(int ID)
     {
-        return await PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE ID=@ID;", async (SqlCommand cmd) =>
+        return await PredicateExecuteScalarAsync<bool>("SELECT Founded = 1 FROM Users WhERE ID=@ID;", async (SqlCommand cmd) =>
         {
             cmd.Parameters.AddWithValue("@ID", ID);
             await Task.CompletedTask;
@@ -85,7 +93,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<int> InsertAsync(User user)
     {
-        return await PredicateExecuteScalar<int>("SP_InsertUser", async (SqlCommand cmd) =>
+        return await PredicateExecuteScalarAsync<int>("SP_InsertUser", async (SqlCommand cmd) =>
         {
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Username", user.Username);

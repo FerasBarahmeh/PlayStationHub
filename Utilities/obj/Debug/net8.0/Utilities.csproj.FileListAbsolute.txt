@@ -9,3 +9,4 @@ C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.dll
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\refint\Utilities.dll
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.pdb
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\ref\Utilities.dll
+C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.sourcelink.json

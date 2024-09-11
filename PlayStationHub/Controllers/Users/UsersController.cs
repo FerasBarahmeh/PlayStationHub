@@ -49,12 +49,15 @@ public class UsersController : BaseController<IUserService>
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Insert(InsertUserRequest user)
     {
         _Service.UserModel = _Mapper.Map<UserDTO>(user);
         _Service.Password = user.Password;
 
         var value = await _Service.SaveAsync();
-        return Ok(new { Value = value });
+        if (value)
+            return Ok(new ResponseOutcome<int>(_Service.UserModel.ID, HttpStatusCode.Created, $"Success create new use has {_Service.UserModel.ID} identifier"));
+        return StatusCode((int)HttpStatusCode.InternalServerError, "Some error according, try again later");
     }
 }

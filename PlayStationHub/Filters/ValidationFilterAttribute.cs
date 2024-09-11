@@ -7,10 +7,7 @@ namespace PlayStationHub.API.Filters;
 
 public class ValidationFilterAttribute : IActionFilter
 {
-    public void OnActionExecuted(ActionExecutedContext context)
-    {
-
-    }
+    public void OnActionExecuted(ActionExecutedContext context) { }
 
     public void OnActionExecuting(ActionExecutingContext context)
     {

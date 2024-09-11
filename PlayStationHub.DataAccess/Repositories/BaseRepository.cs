@@ -52,7 +52,7 @@ public abstract class BaseRepository<T>
         return Record;
     }
 
-    public async Task<ReturnType> PredicateExecuteScalar<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
+    public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
     {
         ReturnType Result = default;
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
@@ -70,4 +70,24 @@ public abstract class BaseRepository<T>
         }
         return Result;
     }
+
+    public TReturnType PredicateExecuteScalar<TReturnType>(string query, Action<SqlCommand> setParameters)
+    {
+        TReturnType result = default;
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                setParameters(cmd);
+
+                conn.Open();
+                object scalarResult = cmd.ExecuteScalar();
+
+                if (scalarResult != null && scalarResult != DBNull.Value)
+                    result = (TReturnType)Convert.ChangeType(scalarResult, typeof(TReturnType));
+            }
+        }
+        return result;
+    }
+
 }

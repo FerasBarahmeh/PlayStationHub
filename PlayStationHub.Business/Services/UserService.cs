@@ -42,6 +42,10 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         return await _Repository.IsExistAsync(Username);
     }
+    public bool IsExist(string Username)
+    {
+        return _Repository.IsExist(Username);
+    }
     public async Task<bool> IsExistAsync(int ID)
     {
         return await _Repository.IsExistAsync(ID);

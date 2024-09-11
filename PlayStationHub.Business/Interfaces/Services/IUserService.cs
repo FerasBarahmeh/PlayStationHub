@@ -10,6 +10,7 @@ public interface IUserService
     UserDTO UserModel { get; set; }
     Task<IEnumerable<UserDTO>> AllAsync();
     Task<bool> IsExistAsync(string Username);
+    bool IsExist(string Username);
     Task<bool> IsExistAsync(int ID);
     Task<UserDTO> FindAsync(string Username);
     Task<UserDTO> FindAsync(int ID);
