@@ -70,6 +70,4 @@ public class UsersController : BaseController<IUserService>
 
         return StatusCode((int)HttpStatusCode.InternalServerError, "User not found or could not be deleted.");
     }
-
-
 }

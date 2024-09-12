@@ -122,4 +122,25 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
+    public async Task<User> GetUserCredentialsByUsernameAsync(string Username)
+    {
+        return await PredicateExecuteReaderForOneRecordAsync("SELECT TOP 1 * FROM Users WHERE Username=@Username;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.Add("@Username", SqlDbType.NVarChar).Value = Username;
+            await Task.CompletedTask;
+
+        }, reader =>
+        {
+            return new User
+            {
+                ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                Username = reader.GetString(reader.GetOrdinal("Username")),
+                Phone = reader.GetString(reader.GetOrdinal("Phone")),
+                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
+                Password = reader.GetString(reader.GetOrdinal("Password")),
+                Status = reader.GetByte(reader.GetOrdinal("Status"))
+            };
+        });
+
+    }
 }

@@ -15,6 +15,7 @@ builder.Services.AddControllers()
 
 // API Configurations
 Configure.APIConfigure(ref builder);
+Configure.JwtAuthentication(ref builder);
 
 
 DependencyInjection.AddFilters(ref builder);

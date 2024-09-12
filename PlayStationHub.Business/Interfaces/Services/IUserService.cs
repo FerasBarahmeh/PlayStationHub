@@ -15,5 +15,5 @@ public interface IUserService : IAllAsync<UserDTO>, IIsExistAsync, IFindAsync<Us
     Task<UserDTO> FindAsync(string Username);
 
     Task<bool> SaveAsync();
-
+    Task<UserLoginDTO> GetUserCredentialsByUsernameAsync(string Username);
 }

@@ -88,4 +88,10 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         return _Repository.IsExist(ID);
     }
+
+    public async Task<UserLoginDTO> GetUserCredentialsByUsernameAsync(string Username)
+    {
+        var user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
+        return _Mapper.Map<UserLoginDTO>(user);
+    }
 }
