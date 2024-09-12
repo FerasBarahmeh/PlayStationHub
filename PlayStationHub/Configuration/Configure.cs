@@ -32,6 +32,7 @@ public static class Configure
             });
 
         builder.Services.AddSingleton(JWTOptions);
-
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddSingleton<ClaimsHelper>();
     }
 }

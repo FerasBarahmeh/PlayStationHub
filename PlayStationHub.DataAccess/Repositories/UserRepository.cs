@@ -149,6 +149,4 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
-
-
 }

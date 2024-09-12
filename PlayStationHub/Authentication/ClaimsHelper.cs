@@ -2,21 +2,33 @@
 
 namespace PlayStationHub.API.Authentication;
 
-public static class ClaimsHelper
+public class ClaimsHelper
 {
-    public static int? ID(ClaimsPrincipal user)
+    private readonly IHttpContextAccessor _HttpContextAccessor;
+    public ClaimsPrincipal User => _HttpContextAccessor.HttpContext?.User;
+    public int? ID
     {
+        get
+        {
 
-        var userIdClaim = user.FindFirst("ID")?.Value;
+            if (int.TryParse(User.FindFirst("ID")?.Value, out int userId))
+                return userId;
 
-        if (int.TryParse(userIdClaim, out int userId))
-            return userId;
-
-        return null;
+            return null;
+        }
     }
-    public static string Username(ClaimsPrincipal user)
+
+    public string Username
     {
-        return user.FindFirst("Username")?.Value;
+        get
+        {
+            return _HttpContextAccessor.HttpContext?.User.FindFirstValue("Username");
+        }
+    }
+
+    public ClaimsHelper(IHttpContextAccessor HttpContextAccessor)
+    {
+        _HttpContextAccessor = HttpContextAccessor;
     }
 
 }

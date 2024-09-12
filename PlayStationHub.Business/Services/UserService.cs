@@ -113,6 +113,4 @@ public class UserService : BaseService<IUserRepository>, IUserService
         var user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
         return _Mapper.Map<UserLoginDTO>(user);
     }
-
-
 }

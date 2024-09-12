@@ -16,7 +16,11 @@ namespace PlayStationHub.API.Controllers.Users;
 [Authorize]
 public class UsersController : BaseController<IUserService>
 {
-    public UsersController(IUserService service, IMapper mapper) : base(service, mapper) { }
+    private readonly ClaimsHelper _ClaimsHelper;
+    public UsersController(IUserService service, IMapper mapper, ClaimsHelper claimsHelper) : base(service, mapper)
+    {
+        _ClaimsHelper = claimsHelper;
+    }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> All()
@@ -78,14 +82,12 @@ public class UsersController : BaseController<IUserService>
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Update(UpdateUserRequest Request)
     {
-
-        Request.ID = ClaimsHelper.ID(User);
+        Request.ID = _ClaimsHelper.ID;
         if (!Request.ID.HasValue) return Unauthorized();
 
         var user = await _Service.FindAsync(Request.ID.Value);
 
         if (user == null) return NotFound(new NullableResponseData(HttpStatusCode.NotFound, "Not found user in our credentials"));
-
 
         _Mapper.Map(Request, user);
         _Service.UserModel = user;
