@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PlayStationHub.API.Authentication;
+using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Authentications;
 using PlayStationHub.Business.Interfaces.Services;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,6 +21,7 @@ public class LoginController : BaseController<IUserService>
     public LoginController(JwtOptions JWTOptions, IUserService service, IMapper mapper) : base(service, mapper) { _JWTOptions = JWTOptions; }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<ActionResult<string>> Login(LoginRequest Request)
     {
         var user = await _Service.GetUserCredentialsByUsernameAsync(Request.Username);

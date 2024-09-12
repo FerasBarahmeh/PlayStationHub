@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.DataTransferObject.Users.Requests;
@@ -11,6 +13,7 @@ namespace PlayStationHub.API.Controllers.Users;
 
 [Route("/api/[controller]")]
 [ApiController]
+[Authorize]
 public class UsersController : BaseController<IUserService>
 {
     public UsersController(IUserService service, IMapper mapper) : base(service, mapper) { }
@@ -69,5 +72,30 @@ public class UsersController : BaseController<IUserService>
             return Ok(new ResponseOutcome<bool>(data: true, status: HttpStatusCode.OK, message: $"Successfully deleted user with ID {ID}."));
 
         return StatusCode((int)HttpStatusCode.InternalServerError, "User not found or could not be deleted.");
+    }
+
+    [HttpPatch]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> Update(UpdateUserRequest Request)
+    {
+
+        Request.ID = ClaimsHelper.ID(User);
+        if (!Request.ID.HasValue) return Unauthorized();
+
+        var user = await _Service.FindAsync(Request.ID.Value);
+
+        if (user == null) return NotFound(new NullableResponseData(HttpStatusCode.NotFound, "Not found user in our credentials"));
+
+
+        _Mapper.Map(Request, user);
+        _Service.UserModel = user;
+
+
+        bool IsUpdated = await _Service.SaveAsync();
+
+        if (!IsUpdated)
+            return StatusCode((int)HttpStatusCode.InternalServerError, "Occur error try again later pls.");
+
+        return Ok(new ResponseOutcome<UserDTO>(_Service.UserModel, HttpStatusCode.OK, "Success Update you profile"));
     }
 }

@@ -90,7 +90,7 @@ public abstract class BaseRepository<T>
         return result;
     }
 
-    public async Task<int> PredicateExecuteNonQuery(string Query, Func<SqlCommand, Task> SetParams)
+    public async Task<int> PredicateExecuteNonQueryAsync(string Query, Func<SqlCommand, Task> SetParams)
     {
         int RowAffected = 0;
 

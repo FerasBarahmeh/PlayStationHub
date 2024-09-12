@@ -60,20 +60,39 @@ public class UserService : BaseService<IUserRepository>, IUserService
         var user = await _Repository.FindAsync(ID);
         return _Mapper.Map<UserDTO>(user);
     }
+    private async Task<int?> _Insert()
+    {
+        var userForCreationDto = _Mapper.Map<UserForCreationDTO>(UserModel);
 
+        userForCreationDto.Password = Password;
+
+        int? ID = await _Repository.InsertAsync(_Mapper.Map<User>(userForCreationDto));
+
+        return ID;
+    }
+    public async Task<int?> _Update()
+    {
+        var user = _Mapper.Map<User>(UserModel);
+        int? ID = await _Repository.UpdateAsync(user);
+        return ID;
+    }
     public async Task<bool> SaveAsync()
     {
         if (Mode == ModeStatus.Insert)
         {
-            var userForCreationDto = _Mapper.Map<UserForCreationDTO>(UserModel);
-
-            userForCreationDto.Password = Password;
-
-            int? ID = await _Repository.InsertAsync(_Mapper.Map<User>(userForCreationDto));
-            if (ID == null) return false;
-
+            int? ID = await _Insert();
             UserModel.ID = ID;
             return ID != null;
+        }
+        else if (Mode == ModeStatus.Update)
+        {
+            int? RowsAffected = await _Update();
+            if (RowsAffected is not null && RowsAffected > 0)
+            {
+                var user = await _Repository.FindAsync((int)UserModel.ID);
+                UserModel = _Mapper.Map<UserDTO>(user);
+                return true;
+            }
         }
         return false;
 
@@ -94,4 +113,6 @@ public class UserService : BaseService<IUserRepository>, IUserService
         var user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
         return _Mapper.Map<UserLoginDTO>(user);
     }
+
+
 }

@@ -14,13 +14,17 @@ public class UserProfile : Profile
 
         CreateMap<User, UserLoginDTO>()
          .ReverseMap();
+
         CreateMap<UserDTO, InsertUserRequest>()
             .ReverseMap();
 
         CreateMap<User, UserForCreationDTO>()
             .ReverseMap();
+
         CreateMap<UserDTO, UserForCreationDTO>()
             .ReverseMap();
 
+        CreateMap<UpdateUserRequest, UserDTO>()
+             .ForAllMembers(opts => opts.Condition((src, destination, srcMember) => srcMember != null));
     }
 }

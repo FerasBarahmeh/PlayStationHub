@@ -9,7 +9,6 @@ namespace PlayStationHub.DataAccess.Repositories;
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
     public UserRepository(IConfiguration configuration) : base(configuration) { }
-
     public async Task<IEnumerable<User>> AllAsync()
     {
         return await PredicateExecuteReaderAsync("SELECT * FROM Users;", reader =>
@@ -25,7 +24,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             };
         });
     }
-
     public async Task<bool> IsExistAsync(string Username)
     {
         return await PredicateExecuteScalarAsync<bool>("SELECT Founded = 1 FROM Users WhERE Username=@Username;", async (SqlCommand cmd) =>
@@ -50,7 +48,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
-
     private async Task<User> _FindAsyncStructure(string Query, Func<SqlCommand, Task> Params)
     {
         return await PredicateExecuteReaderForOneRecordAsync(Query, async (SqlCommand cmd) =>
@@ -71,7 +68,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             };
         });
     }
-
     public async Task<User> FindAsync(int ID)
     {
         string Query = @"SELECT * FROM Users WHERE ID = @ID;";
@@ -90,7 +86,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
-
     public async Task<int> InsertAsync(User user)
     {
         return await PredicateExecuteScalarAsync<int>("SP_InsertUser", async (SqlCommand cmd) =>
@@ -103,17 +98,15 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
-
-    public Task<int> DeleteAsync(int ID)
+    public async Task<int> DeleteAsync(int ID)
     {
-        return PredicateExecuteNonQuery("SP_DeleteUserByID", async (SqlCommand cmd) =>
+        return await PredicateExecuteNonQueryAsync("SP_DeleteUserByID", async (SqlCommand cmd) =>
         {
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@ID", ID);
             await Task.CompletedTask;
         });
     }
-
     public bool IsExist(int ID)
     {
         return PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Users WhERE ID=@ID;", async (SqlCommand cmd) =>
@@ -143,4 +136,19 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         });
 
     }
+    public async Task<int> UpdateAsync(User Entity)
+    {
+        string Query = "UPDATE Users SET Username=@Username, Email=@Email, Phone=@Phone, Status=@Status WHERE ID = @ID;";
+        return await PredicateExecuteNonQueryAsync(Query, async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@Username", Entity.Username);
+            cmd.Parameters.AddWithValue("@Email", Entity.Email);
+            cmd.Parameters.AddWithValue("@Phone", Entity.Phone);
+            cmd.Parameters.AddWithValue("@Status", Entity.Status);
+            cmd.Parameters.AddWithValue("@ID", Entity.ID);
+            await Task.CompletedTask;
+        });
+    }
+
+
 }
