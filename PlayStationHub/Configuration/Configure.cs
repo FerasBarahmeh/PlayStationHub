@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PlayStationHub.API.Authentication;
@@ -21,18 +22,55 @@ public static class Configure
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = JWTOptions.Issuer,
-
                     ValidateAudience = true,
-                    ValidAudience = JWTOptions.Audience,
-
+                    ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = JWTOptions.Issuer,
+                    ValidAudience = JWTOptions.Audience,
                     IssuerSigningKey = BaseAuthenticationConfig.GetSymmetricSecurityKey(JWTOptions.SigningKey)
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = ctx =>
+                    {
+                        ctx.Request.Cookies.TryGetValue("jwtToken", out var jwtToken);
+                        if (!string.IsNullOrEmpty(jwtToken))
+                        {
+                            ctx.Token = jwtToken;
+                        }
+
+                        return Task.CompletedTask;
+                    },
                 };
             });
 
         builder.Services.AddSingleton(JWTOptions);
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSingleton<ClaimsHelper>();
+    }
+    public static void AddCORS(ref WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials();
+                });
+        });
+    }
+    public static void AddControllers(ref WebApplicationBuilder builder)
+    {
+        builder.Services.AddControllers()
+            .AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+                fv.DisableDataAnnotationsValidation = true;
+            });
+
     }
 }
