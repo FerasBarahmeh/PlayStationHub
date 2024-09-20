@@ -2,5 +2,5 @@
 
 public interface IErrorResponse
 {
-    List<string> Errors { get; set; }
+    Dictionary<string, List<string>> Errors { get; set; }
 }

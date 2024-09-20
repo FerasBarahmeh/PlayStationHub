@@ -5,8 +5,8 @@ namespace Utilities.Response;
 
 public class ErrorResponse : NullableResponseData, IErrorResponse
 {
-    public List<string> Errors { get; set; }
-    public ErrorResponse(List<string> errors, HttpStatusCode status, string messages) : base(status, messages)
+    public Dictionary<string, List<string>> Errors { get; set; }
+    public ErrorResponse(Dictionary<string, List<string>> errors, HttpStatusCode status, string messages) : base(status, messages)
     {
         Errors = errors;
     }

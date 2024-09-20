@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Authentications;
+using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Net;
 using Utilities.Response;
@@ -24,13 +25,14 @@ public class AuthController : BaseController<IUserService>
 
     [HttpPost("login")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
+    [AllowAnonymous]
     public async Task<ActionResult<string>> Login(LoginRequest Request)
     {
-        var user = await _Service.GetUserCredentialsByUsernameAsync(Request.Username);
-        if (user == null || !Hashing.CompareHashed(Request.Password, user.Password))
+        var LoginCredentials = await _Service.GetUserCredentialsByUsernameAsync(Request.Username);
+        if (LoginCredentials == null || !Hashing.CompareHashed(Request.Password, LoginCredentials.Password))
             return Unauthorized(new NullableResponseData(HttpStatusCode.Unauthorized, "Not found username or password in our credentials"));
 
-        string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, user);
+        string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, LoginCredentials);
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,    // Secure the cookie, making it inaccessible to JavaScript
@@ -41,8 +43,8 @@ public class AuthController : BaseController<IUserService>
         };
 
         Response.Cookies.Append("jwtToken", Token, cookieOptions);
-
-        return Ok(new ResponseOutcome<object>(new { token = Token }, HttpStatusCode.OK, $"Welcome Back {user.Username}"));
+        UserDTO user = await _Service.FindAsync(LoginCredentials.Username);
+        return Ok(new ResponseOutcome<object>(new { user = LoginCredentials }, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}"));
     }
 
     [HttpGet("IsAuth")]
