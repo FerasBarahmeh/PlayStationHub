@@ -33,6 +33,7 @@ public class AuthController : BaseController<IUserService>
             return Unauthorized(new NullableResponseData(HttpStatusCode.Unauthorized, "Not found username or password in our credentials"));
 
         string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, LoginCredentials);
+
         var cookieOptions = new CookieOptions
         {
             HttpOnly = true,    // Secure the cookie, making it inaccessible to JavaScript

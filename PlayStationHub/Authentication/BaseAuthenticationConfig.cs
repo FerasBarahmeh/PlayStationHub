@@ -24,6 +24,7 @@ public class BaseAuthenticationConfig
         {
             Issuer = jwtOptions.Issuer,
             Audience = jwtOptions.Audience,
+
             Expires = DateTime.UtcNow.AddMinutes(30),
             SigningCredentials = new SigningCredentials(GetSymmetricSecurityKey(jwtOptions.SigningKey), SecurityAlgorithms.HmacSha256),
             Subject = new ClaimsIdentity(new Claim[]
@@ -34,6 +35,7 @@ public class BaseAuthenticationConfig
                     new("Phone", user.Phone),
                     new("Status", user.Status.ToString()),
                     new("StatusName", user.StatusName.ToString()),
+
                 }),
         };
 
