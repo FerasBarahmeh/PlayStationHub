@@ -1,9 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using PlayStationHub.DataAccess.Interfaces.Repositories;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
-public abstract class BaseRepository<T>
+public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 {
     protected readonly string _ConnectionString;
     public BaseRepository(IConfiguration configuration)
@@ -24,6 +25,48 @@ public abstract class BaseRepository<T>
                     while (await reader.ReadAsync())
                     {
                         T record = Logic(reader);
+                        Records.Add(record);
+                    }
+                }
+            }
+        }
+        return Records;
+    }
+    public async Task<IEnumerable<T>> PredicateExecuteReaderAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
+    {
+        List<T> Records = new List<T>();
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParameters(cmd);
+                await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        T record = Logic(reader);
+                        Records.Add(record);
+                    }
+                }
+            }
+        }
+        return Records;
+    }
+    public async Task<IEnumerable<Entity>> PredicateExecuteReaderAsync<Entity>(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, Entity> Logic)
+    {
+        List<Entity> Records = new List<Entity>();
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParameters(cmd);
+                await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Entity record = Logic(reader);
                         Records.Add(record);
                     }
                 }

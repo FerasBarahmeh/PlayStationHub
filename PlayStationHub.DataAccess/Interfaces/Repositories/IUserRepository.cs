@@ -9,4 +9,5 @@ public interface IUserRepository : IBaseBasicOperationRepository<User>
     Task<bool> IsExistAsync(string Username);
     bool IsExist(string Username);
     Task<User> GetUserCredentialsByUsernameAsync(string Username);
+    Task<IEnumerable<UserPrivilege>> GetUserPrivilege(int id);
 }

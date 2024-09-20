@@ -149,4 +149,21 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         });
     }
+    public async Task<IEnumerable<UserPrivilege>> GetUserPrivilege(int id)
+    {
+        return await PredicateExecuteReaderAsync<UserPrivilege>("SP_GetUserPrivileges", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@UserID", id);
+            await Task.CompletedTask;
+        }, reader =>
+        {
+            return new UserPrivilege
+            {
+                ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
+                PrivilegeID = reader.GetInt32(reader.GetOrdinal("PrivilegeID")),
+                Name = reader.GetString(reader.GetOrdinal("Name"))
+            };
+        });
+    }
 }
