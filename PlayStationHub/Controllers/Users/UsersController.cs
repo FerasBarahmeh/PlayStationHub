@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.DataTransferObject.Users.Requests;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.Business.Mappers;
 using System.Net;
 using Utilities.Response;
 
@@ -17,7 +17,7 @@ namespace PlayStationHub.API.Controllers.Users;
 public class UsersController : BaseController<IUserService>
 {
     private readonly ClaimsHelper _ClaimsHelper;
-    public UsersController(IUserService service, IMapper mapper, ClaimsHelper claimsHelper) : base(service, mapper)
+    public UsersController(IUserService service, ClaimsHelper claimsHelper) : base(service)
     {
         _ClaimsHelper = claimsHelper;
     }
@@ -59,12 +59,12 @@ public class UsersController : BaseController<IUserService>
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Insert(InsertUserRequest user)
     {
-        _Service.UserModel = _Mapper.Map<UserDTO>(user);
+        _Service.UserModel = UserMapper.ToUserDTO(user);
         _Service.Password = user.Password;
 
         var value = await _Service.SaveAsync();
         if (value)
-            return Ok(new ResponseOutcome<int>(_Service.UserModel.ID, HttpStatusCode.Created, $"Success create new use has {_Service.UserModel.ID} identifier"));
+            return Ok(new ResponseOutcome<object>(new { UserID = _Service.UserModel.ID }, HttpStatusCode.Created, $"Success create new use has {_Service.UserModel.ID} identifier"));
         return StatusCode((int)HttpStatusCode.InternalServerError, "Some error according, try again later");
     }
 
@@ -89,7 +89,8 @@ public class UsersController : BaseController<IUserService>
 
         if (user == null) return NotFound(new NullableResponseData(HttpStatusCode.NotFound, "Not found user in our credentials"));
 
-        _Mapper.Map(Request, user);
+        user = UserMapper.MargeUserDtoWithUpdateRequest(Request, user);
+
         _Service.UserModel = user;
 
 

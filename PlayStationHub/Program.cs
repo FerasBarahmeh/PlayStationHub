@@ -13,7 +13,6 @@ Configure.AddControllers(ref builder);
 DependencyInjection.AddFilters(ref builder);
 DependencyInjection.AddServicesDependencies(ref builder);
 DependencyInjection.AddRepositoriesDependencies(ref builder);
-DependencyInjection.AddAutoMappersDependencies(ref builder);
 
 
 

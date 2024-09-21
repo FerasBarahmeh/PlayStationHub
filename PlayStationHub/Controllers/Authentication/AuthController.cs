@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
@@ -18,7 +17,7 @@ public class AuthController : BaseController<IUserService>
 {
     private readonly JwtOptions _JWTOptions;
 
-    public AuthController(JwtOptions JWTOptions, IUserService service, IMapper mapper) : base(service, mapper)
+    public AuthController(JwtOptions JWTOptions, IUserService service) : base(service)
     {
         _JWTOptions = JWTOptions;
     }
@@ -32,7 +31,9 @@ public class AuthController : BaseController<IUserService>
         if (LoginCredentials == null || !Hashing.CompareHashed(Request.Password, LoginCredentials.Password))
             return Unauthorized(new NullableResponseData(HttpStatusCode.Unauthorized, "Not found username or password in our credentials"));
 
-        string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, LoginCredentials);
+
+        UserDTO user = await _Service.FindAsync(LoginCredentials.Username);
+        string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, user);
 
         var cookieOptions = new CookieOptions
         {
@@ -44,8 +45,8 @@ public class AuthController : BaseController<IUserService>
         };
 
         Response.Cookies.Append("jwtToken", Token, cookieOptions);
-        UserDTO user = await _Service.FindAsync(LoginCredentials.Username);
-        return Ok(new ResponseOutcome<object>(new { user = LoginCredentials }, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}"));
+
+        return Ok(new ResponseOutcome<object>(new { user = user }, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}"));
     }
 
     [HttpGet("IsAuth")]

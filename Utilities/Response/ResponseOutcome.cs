@@ -6,10 +6,6 @@ namespace Utilities.Response;
 
 public class ResponseOutcome<T> : BaseAttributesForResponseStructure, IResponseOutcome<T>, IMetadata<Metadata>
 {
-    private int? iD;
-    private HttpStatusCode created;
-    private string v;
-
     public T Data { get; set; }
 
     public override bool HasError => Data == null;
@@ -29,12 +25,5 @@ public class ResponseOutcome<T> : BaseAttributesForResponseStructure, IResponseO
         StatusCode = status;
         Message = message;
         Metadata = metadata;
-    }
-
-    public ResponseOutcome(int? iD, HttpStatusCode created, string v)
-    {
-        this.iD = iD;
-        this.created = created;
-        this.v = v;
     }
 }
