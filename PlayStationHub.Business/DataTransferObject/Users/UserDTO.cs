@@ -16,5 +16,8 @@ public class UserDTO
             return Enum.GetName(typeof(UserStatus), Status);
         }
     }
-
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+    public DateTime? PhoneVerifiedAt { get; set; }
+    public DateTime? EmailVerifiedAt { get; set; }
 }

@@ -13,15 +13,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await PredicateExecuteReaderAsync("SELECT * FROM Users;", reader =>
         {
-            return new User
-            {
-                ID = reader.GetInt32(reader.GetOrdinal("ID")),
-                Username = reader.GetString(reader.GetOrdinal("Username")),
-                Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
-                Password = reader.GetString(reader.GetOrdinal("Password")),
-                Status = reader.GetByte(reader.GetOrdinal("Status"))
-            };
+            return User.GenerateOne(reader);
         });
     }
     public async Task<bool> IsExistAsync(string Username)
@@ -57,15 +49,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         }, reader =>
         {
-            return new User
-            {
-                ID = reader.GetInt32(reader.GetOrdinal("ID")),
-                Username = reader.GetString(reader.GetOrdinal("Username")),
-                Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
-                Password = reader.GetString(reader.GetOrdinal("Password")),
-                Status = reader.GetByte(reader.GetOrdinal("Status"))
-            };
+            return User.GenerateOne(reader);
         });
     }
     public async Task<User> FindAsync(int ID)
@@ -124,15 +108,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
         }, reader =>
         {
-            return new User
-            {
-                ID = reader.GetInt32(reader.GetOrdinal("ID")),
-                Username = reader.GetString(reader.GetOrdinal("Username")),
-                Phone = reader.GetString(reader.GetOrdinal("Phone")),
-                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
-                Password = reader.GetString(reader.GetOrdinal("Password")),
-                Status = reader.GetByte(reader.GetOrdinal("Status"))
-            };
+            return User.GenerateOne(reader);
         });
 
     }
@@ -157,13 +133,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         }, reader =>
         {
-            return new UserPrivilege
-            {
-                ID = reader.GetInt32(reader.GetOrdinal("ID")),
-                UserID = reader.GetInt32(reader.GetOrdinal("UserID")),
-                PrivilegeID = reader.GetInt32(reader.GetOrdinal("PrivilegeID")),
-                Name = reader.GetString(reader.GetOrdinal("Name"))
-            };
+            return UserPrivilege.GenerateOne(reader);
         });
     }
 }

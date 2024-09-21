@@ -35,7 +35,6 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         var users = await _Repository.AllAsync();
         return UserMapper.ToUserDTO(users);
-        //return _Mapper.Map<IEnumerable<UserDTO>>(users);
     }
     public async Task<bool> IsExistAsync(string Username)
     {

@@ -15,7 +15,12 @@ public class UserMapper
             Phone = userDTO.Phone,
             Email = userDTO.Email,
             Status = userDTO.Status,
-            Password = default
+            Password = default,
+            CreatedAt = userDTO.CreatedAt,
+            UpdatedAt = userDTO.UpdatedAt,
+            PhoneVerifiedAt = userDTO.PhoneVerifiedAt,
+            EmailVerifiedAt = userDTO.EmailVerifiedAt,
+            Privileges = default
         };
     }
     public static User ToUser(UserLoginDTO userLoginDTO)
@@ -52,6 +57,11 @@ public class UserMapper
             Email = user.Email,
             Status = user.Status,
             Phone = user.Phone,
+            CreatedAt = user.CreatedAt,
+            UpdatedAt = user.UpdatedAt,
+            PhoneVerifiedAt = user.PhoneVerifiedAt,
+            EmailVerifiedAt = user.EmailVerifiedAt,
+
         };
     }
     public static IEnumerable<UserDTO> ToUserDTO(IEnumerable<User> users)
@@ -66,6 +76,11 @@ public class UserMapper
                 Email = user.Email,
                 Status = user.Status,
                 Phone = user.Phone,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt,
+                PhoneVerifiedAt = user.PhoneVerifiedAt,
+                EmailVerifiedAt = user.EmailVerifiedAt,
+
             });
         }
         return result;
