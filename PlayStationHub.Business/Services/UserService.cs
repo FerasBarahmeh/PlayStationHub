@@ -1,4 +1,5 @@
-﻿using PlayStationHub.Business.DataTransferObject.Users;
+﻿using PlayStationHub.Business.DataTransferObject.Privileges;
+using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
@@ -29,6 +30,17 @@ public class UserService : BaseService<IUserRepository>, IUserService
             }
             _Password = null;
         }
+    }
+    private Task<IEnumerable<UserPrivilegeDTO>> _privileges;
+    public Task<IEnumerable<UserPrivilegeDTO>> Privileges
+    {
+        get
+        {
+            if (_privileges == null && UserModel.ID != null)
+                _privileges = GetUserPrivilege((int)UserModel.ID);
+            return _privileges;
+        }
+        set { _privileges = value; }
     }
     public UserService(IUserRepository repo) : base(repo) { }
     public async Task<IEnumerable<UserDTO>> AllAsync()
@@ -109,5 +121,10 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         var user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
         return UserMapper.ToUserLoginDTO(user);
+    }
+    public async Task<IEnumerable<UserPrivilegeDTO>> GetUserPrivilege(int id)
+    {
+        var privileges = await _Repository.GetUserPrivilege(id);
+        return UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
     }
 }

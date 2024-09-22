@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 
 
@@ -17,9 +17,24 @@ public class BaseAuthenticationConfig
     {
         return new SymmetricSecurityKey(GetAuthKey(StringSigningKey));
     }
-    public static string GenerateToken(JwtOptions jwtOptions, UserDTO user)
+    public static string GenerateToken(JwtOptions jwtOptions, UserDTO user, IEnumerable<UserPrivilegeDTO> privileges)
     {
         var TokenHandler = new JwtSecurityTokenHandler();
+
+        var claims = new Dictionary<string, object>{
+            {"ID", user.ID.ToString() },
+            { "Username", user.Username },
+            { "Email", user.Email },
+            {"Phone", user.Phone },
+            { "Status", user.Status.ToString() },
+            { "StatusName", user.StatusName.ToString() },
+
+        };
+
+        claims.Add("privileges", privileges.Select(p => p.PrivilegeID.ToString()).ToList());
+        claims.Add("privilegesNames", privileges.Select(p => p.Name).ToList());
+
+
         var TokenDescriptor = new SecurityTokenDescriptor
         {
             Issuer = jwtOptions.Issuer,
@@ -27,16 +42,7 @@ public class BaseAuthenticationConfig
 
             Expires = DateTime.UtcNow.AddMinutes(30),
             SigningCredentials = new SigningCredentials(GetSymmetricSecurityKey(jwtOptions.SigningKey), SecurityAlgorithms.HmacSha256),
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                    new("ID", user.ID.ToString()),
-                    new("Username", user.Username),
-                    new("Email", user.Email),
-                    new("Phone", user.Phone),
-                    new("Status", user.Status.ToString()),
-                    new("StatusName", user.StatusName.ToString()),
-
-                }),
+            Claims = claims,
         };
 
         var SecurityToken = TokenHandler.CreateToken(TokenDescriptor);

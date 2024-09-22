@@ -19,8 +19,7 @@ public class UserMapper
             CreatedAt = userDTO.CreatedAt,
             UpdatedAt = userDTO.UpdatedAt,
             PhoneVerifiedAt = userDTO.PhoneVerifiedAt,
-            EmailVerifiedAt = userDTO.EmailVerifiedAt,
-            Privileges = default
+            EmailVerifiedAt = userDTO.EmailVerifiedAt
         };
     }
     public static User ToUser(UserLoginDTO userLoginDTO)
@@ -80,12 +79,9 @@ public class UserMapper
                 UpdatedAt = user.UpdatedAt,
                 PhoneVerifiedAt = user.PhoneVerifiedAt,
                 EmailVerifiedAt = user.EmailVerifiedAt,
-
             });
         }
         return result;
-
-
     }
     public static UserDTO ToUserDTO(InsertUserRequest user)
     {

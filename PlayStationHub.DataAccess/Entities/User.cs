@@ -14,7 +14,7 @@ public class User
     public DateTime UpdatedAt { get; set; }
     public DateTime? PhoneVerifiedAt { get; set; }
     public DateTime? EmailVerifiedAt { get; set; }
-    public IEnumerable<UserPrivilege> Privileges { get; set; }
+
     public static User GenerateOne(SqlDataReader reader)
     {
         return new User

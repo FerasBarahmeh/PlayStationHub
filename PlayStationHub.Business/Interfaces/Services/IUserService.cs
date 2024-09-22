@@ -1,4 +1,5 @@
-﻿using PlayStationHub.Business.DataTransferObject.Users;
+﻿using PlayStationHub.Business.DataTransferObject.Privileges;
+using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Async;
 using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Sync;
@@ -15,4 +16,5 @@ public interface IUserService : IAllAsync<UserDTO>, IIsExistAsync, IFindAsync<Us
     Task<UserDTO> FindAsync(string Username);
     Task<bool> SaveAsync();
     Task<UserLoginDTO> GetUserCredentialsByUsernameAsync(string Username);
+    Task<IEnumerable<UserPrivilegeDTO>> GetUserPrivilege(int id);
 }

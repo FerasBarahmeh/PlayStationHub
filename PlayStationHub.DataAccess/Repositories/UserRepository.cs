@@ -127,8 +127,9 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     }
     public async Task<IEnumerable<UserPrivilege>> GetUserPrivilege(int id)
     {
-        return await PredicateExecuteReaderAsync<UserPrivilege>("SP_GetUserPrivileges", async (SqlCommand cmd) =>
+        return await PredicateExecuteReaderAsync("SP_GetUserPrivileges", async (SqlCommand cmd) =>
         {
+            cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@UserID", id);
             await Task.CompletedTask;
         }, reader =>

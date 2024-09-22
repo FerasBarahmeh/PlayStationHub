@@ -1,6 +1,6 @@
 ﻿namespace PlayStationHub.Business.DataTransferObject.Privileges;
 
-public class UserPrivilege
+public class UserPrivilegeDTO
 {
     public int ID { get; set; }
     public int UserID { get; set; }

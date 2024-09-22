@@ -20,4 +20,18 @@ public class UserDTO
     public DateTime UpdatedAt { get; set; }
     public DateTime? PhoneVerifiedAt { get; set; }
     public DateTime? EmailVerifiedAt { get; set; }
+    public override string ToString()
+    {
+        return new
+        {
+            ID,
+            Username,
+            Phone,
+            Email,
+            CreatedAt,
+            UpdatedAt,
+            PhoneVerifiedAt,
+            EmailVerifiedAt
+        }.ToString();
+    }
 }
