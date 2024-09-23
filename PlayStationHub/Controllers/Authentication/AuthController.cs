@@ -9,18 +9,17 @@ using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Net;
 using Utilities.Response;
-using Utilities.Security;
 
 namespace PlayStationHub.API.Controllers.Authentication;
 
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class AuthController : BaseController<IUserService>
+public class AuthController : BaseController<IAuthService>
 {
     private readonly JwtOptions _JWTOptions;
     private readonly ClaimsHelper _claimsHelper;
-    public AuthController(JwtOptions JWTOptions, IUserService service, ClaimsHelper claimsHelper) : base(service)
+    public AuthController(JwtOptions JWTOptions, IAuthService service, ClaimsHelper claimsHelper) : base(service)
     {
         _JWTOptions = JWTOptions;
         _claimsHelper = claimsHelper;
@@ -29,18 +28,14 @@ public class AuthController : BaseController<IUserService>
     [HttpPost("login")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     [AllowAnonymous]
-    public async Task<ActionResult<string>> Login(LoginRequest Request)
+    public async Task<IActionResult> Login(LoginRequest Request)
     {
-        var LoginCredentials = await _Service.GetUserCredentialsByUsernameAsync(Request.Username);
-        if (LoginCredentials == null || !Hashing.CompareHashed(Request.Password, LoginCredentials.Password))
-            return Unauthorized(new NullableResponseData(HttpStatusCode.Unauthorized, "Not found username or password in our credentials"));
+        ResponseOutcome<string> Token = await _Service.LoginAsync(Request.Username, Request.Password);
 
+        if (Token.StatusCode == HttpStatusCode.Unauthorized)
+            return Unauthorized(new NullableResponseData(Token.StatusCode, Token.Message));
 
-        UserDTO user = await _Service.FindAsync(LoginCredentials.Username);
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.GetUserPrivilege((int)user.ID);
-        string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, privileges);
-
-        var cookieOptions = new CookieOptions
+        CookieOptions cookieOptions = new CookieOptions
         {
             HttpOnly = true,    // Secure the cookie, making it inaccessible to JavaScript
             Secure = false,      // Send over HTTP and HTTPS
@@ -49,9 +44,9 @@ public class AuthController : BaseController<IUserService>
             Expires = DateTime.UtcNow.AddMinutes(int.Parse(_JWTOptions.Lifetime)),
         };
 
-        Response.Cookies.Append("jwtToken", Token, cookieOptions);
+        Response.Cookies.Append("jwtToken", Token.Data.ToString(), cookieOptions);
 
-        return Ok(new ResponseOutcome<object>(user, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}"));
+        return Ok(new ResponseOutcome<object>(true, Token.StatusCode, Token.Message));
     }
 
     [HttpGet("IsAuth")]
@@ -70,7 +65,7 @@ public class AuthController : BaseController<IUserService>
     [HttpPost("AuthorizedUser")]
     public async Task<IActionResult> AuthorizedUser()
     {
-        UserDTO user = await _Service.FindAsync((int)_claimsHelper.ID);
+        UserDTO user = await _Service.User((int)_claimsHelper.ID);
         return user != null ?
             Ok(new ResponseOutcome<UserDTO>(user, HttpStatusCode.OK, ""))
             : StatusCode((int)HttpStatusCode.NotFound, "Not Found the user");
@@ -79,7 +74,7 @@ public class AuthController : BaseController<IUserService>
     [HttpPost("UserPrivileges")]
     public async Task<IActionResult> UserPrivileges()
     {
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.GetUserPrivilege((int)_claimsHelper.ID);
+        IEnumerable<UserPrivilegeDTO> privileges = await _Service.UserPrivileges((int)_claimsHelper.ID);
         return Ok(new ResponseOutcome<IEnumerable<UserPrivilegeDTO>>(privileges, HttpStatusCode.OK, "Authorized user privileges"));
     }
 }

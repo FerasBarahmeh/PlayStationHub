@@ -11,6 +11,7 @@ public static class DependencyInjection
     public static void AddServicesDependencies(ref WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
     }
     public static void AddRepositoriesDependencies(ref WebApplicationBuilder builder)
     {
