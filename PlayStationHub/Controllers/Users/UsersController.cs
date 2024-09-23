@@ -4,6 +4,7 @@ using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.DataTransferObject.Users.Requests;
+using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
 using System.Net;
@@ -23,6 +24,7 @@ public class UsersController : BaseController<IUserService>
     }
 
     [HttpGet]
+    [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<ActionResult<IEnumerable<UserDTO>>> All()
     {
         var users = await _Service.AllAsync();
@@ -37,8 +39,10 @@ public class UsersController : BaseController<IUserService>
             ));
     }
 
+
     [HttpGet("Find/{ID}")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
+    [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<IActionResult> Find(int ID)
     {
         var user = await _Service.FindAsync(ID);

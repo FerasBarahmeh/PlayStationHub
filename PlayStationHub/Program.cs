@@ -9,7 +9,6 @@ Configure.JwtAuthentication(ref builder);
 Configure.AddCORS(ref builder);
 Configure.AddControllers(ref builder);
 
-
 DependencyInjection.AddFilters(ref builder);
 DependencyInjection.AddServicesDependencies(ref builder);
 DependencyInjection.AddRepositoriesDependencies(ref builder);

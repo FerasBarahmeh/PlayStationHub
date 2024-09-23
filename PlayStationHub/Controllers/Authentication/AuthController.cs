@@ -45,7 +45,7 @@ public class AuthController : BaseController<IUserService>
             Secure = false,      // Send over HTTP and HTTPS
             SameSite = SameSiteMode.Unspecified, // Not prevent CSRF
             IsEssential = true,
-            Expires = DateTime.UtcNow.AddMinutes(int.Parse(_JWTOptions.Lifetime)) // Expire the cookie after 30 Minute
+            Expires = DateTime.UtcNow.AddMinutes(int.Parse(_JWTOptions.Lifetime)),
         };
 
         Response.Cookies.Append("jwtToken", Token, cookieOptions);
