@@ -12,42 +12,11 @@ public class AuthService : IAuthService
 {
     public readonly IUserService _userService;
     private readonly JwtOptions _JWTOptions;
-    private IEnumerable<UserPrivilegeDTO> _privileges;
 
-    private int _userID;
     public AuthService(IUserService userService, JwtOptions jwtOptions)
     {
         _userService = userService;
         _JWTOptions = jwtOptions;
-    }
-
-    public Task<IEnumerable<UserPrivilegeDTO>> Privileges
-    {
-        get
-        {
-            if (_privileges == null && int.IsPositive(_userID))
-                return _userService.GetUserPrivilege(_userID);
-            return null;
-        }
-    }
-
-    public Task<UserDTO> AuthorizeUser
-    {
-        get
-        {
-            if (int.IsNegative(_userID)) return null;
-            return _userService.FindAsync(_userID);
-        }
-    }
-
-
-    public void Constructing(int id)
-    {
-        _userID = id;
-    }
-    public void Deconstructing()
-    {
-        _userID = -1;
     }
 
     public async Task<ResponseOutcome<string>> LoginAsync(string username, string password)

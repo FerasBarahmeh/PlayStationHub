@@ -23,6 +23,7 @@ public class AuthController : BaseController<IAuthService>
     {
         _JWTOptions = JWTOptions;
         _claimsHelper = claimsHelper;
+
     }
 
     [HttpPost("login")]
@@ -59,6 +60,7 @@ public class AuthController : BaseController<IAuthService>
     public IActionResult Logout()
     {
         Response.Cookies.Delete("jwtToken");
+
         return Ok(new { message = "Logged out" });
     }
 
