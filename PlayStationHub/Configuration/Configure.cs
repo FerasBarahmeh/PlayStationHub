@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PlayStationHub.API.Authentication;
+using PlayStationHub.Business.Authentication;
 using PlayStationHub.Business.Enums;
 using System.Net;
 using System.Text.Json;
@@ -32,7 +33,7 @@ public static class Configure
 
                     ValidIssuer = JWTOptions.Issuer,
                     ValidAudience = JWTOptions.Audience,
-                    IssuerSigningKey = BaseAuthenticationConfig.GetSymmetricSecurityKey(JWTOptions.SigningKey)
+                    IssuerSigningKey = AuthenticationHelper.GetSymmetricSecurityKey(JWTOptions.SigningKey)
                 };
                 options.Events = new JwtBearerEvents
                 {

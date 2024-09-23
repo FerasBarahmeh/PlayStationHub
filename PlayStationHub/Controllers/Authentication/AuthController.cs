@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
+using PlayStationHub.Business.Authentication;
 using PlayStationHub.Business.DataTransferObject.Authentications;
 using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
@@ -37,7 +38,7 @@ public class AuthController : BaseController<IUserService>
 
         UserDTO user = await _Service.FindAsync(LoginCredentials.Username);
         IEnumerable<UserPrivilegeDTO> privileges = await _Service.GetUserPrivilege((int)user.ID);
-        string Token = BaseAuthenticationConfig.GenerateToken(_JWTOptions, user, privileges);
+        string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, privileges);
 
         var cookieOptions = new CookieOptions
         {

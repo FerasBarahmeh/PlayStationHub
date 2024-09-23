@@ -6,9 +6,9 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace PlayStationHub.API.Authentication;
+namespace PlayStationHub.Business.Authentication;
 
-public class BaseAuthenticationConfig
+public class AuthenticationHelper
 {
     public static byte[] GetAuthKey(string StringSigningKey)
     {

@@ -1,4 +1,4 @@
-﻿namespace PlayStationHub.API.Authentication;
+﻿namespace PlayStationHub.Business.Authentication;
 
 public class JwtOptions
 {
