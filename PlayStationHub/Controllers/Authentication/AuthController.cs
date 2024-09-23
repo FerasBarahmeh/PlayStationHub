@@ -79,4 +79,13 @@ public class AuthController : BaseController<IAuthService>
         IEnumerable<UserPrivilegeDTO> privileges = await _Service.UserPrivileges((int)_claimsHelper.ID);
         return Ok(new ResponseOutcome<IEnumerable<UserPrivilegeDTO>>(privileges, HttpStatusCode.OK, "Authorized user privileges"));
     }
+    [HttpPost("HasPrivilege")]
+    public async Task<IActionResult> HasPrivileges([FromBody] int PrivilegeID)
+    {
+        IEnumerable<UserPrivilegeDTO> privileges = await _Service.UserPrivileges((int)_claimsHelper.ID);
+        return Ok(new ResponseOutcome<bool>(
+            privileges.FirstOrDefault(privilege => privilege.PrivilegeID == PrivilegeID)?.ID != null,
+            HttpStatusCode.OK,
+            "Authorized user privileges"));
+    }
 }
