@@ -14,17 +14,16 @@ public class AuthService : IAuthService
     private IUserService _userService;
     private readonly JwtOptions _JWTOptions;
     private IServiceScopeFactory _serviceScopeFactory;
-    private Task<IEnumerable<UserPrivilegeDTO>> _privileges;
+    private IEnumerable<UserPrivilegeDTO> _privileges;
     private UserDTO _user;
 
-    public Task<IEnumerable<UserPrivilegeDTO>> Privileges
+    public IEnumerable<UserPrivilegeDTO> Privileges
     {
         get
         {
             if (UserID == null || _user == null) return null;
-            if (_privileges != null && UserID != null) return _privileges;
+            if (UserID != null && _privileges == null) _SetUserPrivileges();
 
-            _privileges = _userService.GetUserPrivilege((int)UserID);
             return _privileges;
         }
     }
@@ -45,6 +44,10 @@ public class AuthService : IAuthService
     }
     public int? UserID { get; set; }
 
+    public bool IsAdmin => _HasPrivilege(nameof(Enums.Privileges.Admin));
+    public bool IsOwner => _HasPrivilege(nameof(Enums.Privileges.Owner));
+    public bool IsUser => _HasPrivilege(nameof(Enums.Privileges.User));
+
     public AuthService(IServiceScopeFactory serviceScope, JwtOptions jwtOptions)
     {
         _JWTOptions = jwtOptions;
@@ -59,12 +62,10 @@ public class AuthService : IAuthService
         if (LoginCredentials == null || !Hashing.CompareHashed(password, LoginCredentials.Password))
             return new ResponseOutcome<string>(null, HttpStatusCode.Unauthorized, "Not found username or password in our credentials");
 
-
         UserDTO user = await _userService.FindAsync(LoginCredentials.Username);
-        IEnumerable<UserPrivilegeDTO> privileges = await _userService.GetUserPrivilege((int)user.ID);
-        string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, privileges);
-        UserID = (int)user.ID;
-        _user = user;
+        Init(user);
+        string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, Privileges);
+
         return new ResponseOutcome<string>(Token, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}");
     }
     public void Logout()
@@ -72,6 +73,23 @@ public class AuthService : IAuthService
         UserID = null;
         _user = null;
     }
-
-
+    public async void Refresh()
+    {
+        _user = await _userService.FindAsync((int)UserID);
+        _privileges = null;
+    }
+    private async void _SetUserPrivileges()
+    {
+        _privileges = await _userService.GetUserPrivilege((int)UserID);
+    }
+    private bool _HasPrivilege(string privilegeName)
+    {
+        return !string.IsNullOrEmpty(Privileges?.FirstOrDefault(privilege => privilege.Name == privilegeName)?.Name);
+    }
+    private async void Init(UserDTO user)
+    {
+        UserID = (int)user.ID;
+        _user = user;
+        _privileges = await _userService.GetUserPrivilege((int)UserID);
+    }
 }

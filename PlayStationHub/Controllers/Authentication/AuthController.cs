@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Authentication;
 using PlayStationHub.Business.DataTransferObject.Authentications;
-using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Net;
@@ -14,15 +13,8 @@ namespace PlayStationHub.API.Controllers.Authentication;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class AuthController : BaseController<IAuthService>
+public class AuthController(JwtOptions _JWTOptions, IAuthService service) : BaseController<IAuthService>(service)
 {
-    private readonly JwtOptions _JWTOptions;
-
-    public AuthController(JwtOptions JWTOptions, IAuthService service) : base(service)
-    {
-        _JWTOptions = JWTOptions;
-    }
-
     [HttpPost("login")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     [AllowAnonymous]
@@ -48,7 +40,7 @@ public class AuthController : BaseController<IAuthService>
     }
 
     [HttpGet("IsAuth")]
-    public IActionResult CheckAuthentication()
+    public IActionResult IsAuth()
     {
         return User.Identity.IsAuthenticated ? Ok(true) : Unauthorized(false);
     }
@@ -61,7 +53,7 @@ public class AuthController : BaseController<IAuthService>
         return Ok(new { message = "Logged out" });
     }
 
-    [HttpPost("AuthorizedUser")]
+    [HttpGet("AuthorizedUser")]
     public IActionResult AuthorizedUser()
     {
         UserDTO user = _Service.AuthUser;
@@ -70,19 +62,21 @@ public class AuthController : BaseController<IAuthService>
             : StatusCode((int)HttpStatusCode.NotFound, "Not Found the user");
     }
 
-    [HttpPost("UserPrivileges")]
-    public async Task<IActionResult> UserPrivileges()
+    [HttpGet("IsAdmin")]
+    public IActionResult IsAdmin()
     {
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.Privileges;
-        return Ok(new ResponseOutcome<IEnumerable<UserPrivilegeDTO>>(privileges, HttpStatusCode.OK, "Authorized user privileges"));
+        return Ok(new ResponseOutcome<bool>(_Service.IsAdmin, HttpStatusCode.OK, ""));
     }
-    [HttpPost("HasPrivilege")]
-    public async Task<IActionResult> HasPrivileges([FromBody] int PrivilegeID)
+
+    [HttpGet("IsOwner")]
+    public IActionResult IsOwner()
     {
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.Privileges;
-        return Ok(new ResponseOutcome<bool>(
-            privileges.FirstOrDefault(privilege => privilege.PrivilegeID == PrivilegeID)?.ID != null,
-            HttpStatusCode.OK,
-            "Authorized user privileges"));
+        return Ok(new ResponseOutcome<bool>(_Service.IsOwner, HttpStatusCode.OK, ""));
+    }
+
+    [HttpGet("IsUser")]
+    public IActionResult IsUser()
+    {
+        return Ok(new ResponseOutcome<bool>(_Service.IsUser, HttpStatusCode.OK, ""));
     }
 }
