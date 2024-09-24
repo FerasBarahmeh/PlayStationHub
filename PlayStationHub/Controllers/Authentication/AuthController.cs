@@ -21,7 +21,7 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
     public async Task<IActionResult> Login(LoginRequest Request)
     {
         ResponseOutcome<string> Token = await _Service.LoginAsync(Request.Username, Request.Password);
-
+        int? UserId = _Service.UserID;
         if (Token.StatusCode == HttpStatusCode.Unauthorized)
             return Unauthorized(new NullableResponseData(Token.StatusCode, Token.Message));
 
@@ -56,7 +56,7 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
     [HttpGet("AuthorizedUser")]
     public IActionResult AuthorizedUser()
     {
-        UserDTO user = _Service.AuthUser;
+        UserDTO user = _Service.AuthenticatedUser;
         return user != null ?
             Ok(new ResponseOutcome<UserDTO>(user, HttpStatusCode.OK, ""))
             : StatusCode((int)HttpStatusCode.NotFound, "Not Found the user");
