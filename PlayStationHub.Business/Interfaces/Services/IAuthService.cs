@@ -6,9 +6,11 @@ namespace PlayStationHub.Business.Interfaces.Services;
 
 public interface IAuthService
 {
-
-
+    Task<IEnumerable<UserPrivilegeDTO>> Privileges { get; }
+    UserDTO AuthUser { get; }
+    public int? UserID { get; set; }
     Task<ResponseOutcome<string>> LoginAsync(string username, string password);
-    Task<UserDTO> User(int id);
-    Task<IEnumerable<UserPrivilegeDTO>> UserPrivileges(int id);
+
+    void Logout();
+    bool IsAuth { get; }
 }

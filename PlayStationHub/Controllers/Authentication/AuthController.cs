@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PlayStationHub.API.Authentication;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Authentication;
 using PlayStationHub.Business.DataTransferObject.Authentications;
@@ -18,12 +17,10 @@ namespace PlayStationHub.API.Controllers.Authentication;
 public class AuthController : BaseController<IAuthService>
 {
     private readonly JwtOptions _JWTOptions;
-    private readonly ClaimsHelper _claimsHelper;
-    public AuthController(JwtOptions JWTOptions, IAuthService service, ClaimsHelper claimsHelper) : base(service)
+
+    public AuthController(JwtOptions JWTOptions, IAuthService service) : base(service)
     {
         _JWTOptions = JWTOptions;
-        _claimsHelper = claimsHelper;
-
     }
 
     [HttpPost("login")]
@@ -60,14 +57,14 @@ public class AuthController : BaseController<IAuthService>
     public IActionResult Logout()
     {
         Response.Cookies.Delete("jwtToken");
-
+        _Service.Logout();
         return Ok(new { message = "Logged out" });
     }
 
     [HttpPost("AuthorizedUser")]
-    public async Task<IActionResult> AuthorizedUser()
+    public IActionResult AuthorizedUser()
     {
-        UserDTO user = await _Service.User((int)_claimsHelper.ID);
+        UserDTO user = _Service.AuthUser;
         return user != null ?
             Ok(new ResponseOutcome<UserDTO>(user, HttpStatusCode.OK, ""))
             : StatusCode((int)HttpStatusCode.NotFound, "Not Found the user");
@@ -76,13 +73,13 @@ public class AuthController : BaseController<IAuthService>
     [HttpPost("UserPrivileges")]
     public async Task<IActionResult> UserPrivileges()
     {
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.UserPrivileges((int)_claimsHelper.ID);
+        IEnumerable<UserPrivilegeDTO> privileges = await _Service.Privileges;
         return Ok(new ResponseOutcome<IEnumerable<UserPrivilegeDTO>>(privileges, HttpStatusCode.OK, "Authorized user privileges"));
     }
     [HttpPost("HasPrivilege")]
     public async Task<IActionResult> HasPrivileges([FromBody] int PrivilegeID)
     {
-        IEnumerable<UserPrivilegeDTO> privileges = await _Service.UserPrivileges((int)_claimsHelper.ID);
+        IEnumerable<UserPrivilegeDTO> privileges = await _Service.Privileges;
         return Ok(new ResponseOutcome<bool>(
             privileges.FirstOrDefault(privilege => privilege.PrivilegeID == PrivilegeID)?.ID != null,
             HttpStatusCode.OK,

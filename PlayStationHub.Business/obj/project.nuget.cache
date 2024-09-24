@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0Ur0PX1zwx4+CuDewWTsUkiul7K0uAT62HsP5r7ATpvwHtKFemJxxWFUnUEum8hNsOi2WcBOuDszu8BfHR5NSA==",
+  "dgSpecHash": "+nb401c7z9j6mvvwrH3LDrI1bqdvRzmAnqSZY3L3qO9P23R1y5U9/JqmqaWNkvTLpAnvK9YJmVqBhY76I7QxSw==",
   "success": true,
   "projectFilePath": "C:\\Container\\PlayStationHub\\PlayStationHub.Business\\PlayStationHub.Business.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,8 @@
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.2.0\\microsoft.data.sqlclient.sni.runtime.5.2.0.nupkg.sha512",
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\feras\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\feras\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.identity.client\\4.61.3\\microsoft.identity.client.4.61.3.nupkg.sha512",
     "C:\\Users\\feras\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\4.61.3\\microsoft.identity.client.extensions.msal.4.61.3.nupkg.sha512",

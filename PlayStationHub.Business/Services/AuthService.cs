@@ -1,4 +1,5 @@
-﻿using PlayStationHub.Business.Authentication;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PlayStationHub.Business.Authentication;
 using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
@@ -10,13 +11,46 @@ namespace PlayStationHub.Business.Services;
 
 public class AuthService : IAuthService
 {
-    public readonly IUserService _userService;
+    private IUserService _userService;
     private readonly JwtOptions _JWTOptions;
+    private IServiceScopeFactory _serviceScopeFactory;
+    private Task<IEnumerable<UserPrivilegeDTO>> _privileges;
+    private UserDTO _user;
 
-    public AuthService(IUserService userService, JwtOptions jwtOptions)
+    public Task<IEnumerable<UserPrivilegeDTO>> Privileges
     {
-        _userService = userService;
+        get
+        {
+            if (UserID == null || _user == null) return null;
+            if (_privileges != null && UserID != null) return _privileges;
+
+            _privileges = _userService.GetUserPrivilege((int)UserID);
+            return _privileges;
+        }
+    }
+
+    public UserDTO AuthUser
+    {
+        get
+        {
+            return _user;
+        }
+    }
+    public bool IsAuth
+    {
+        get
+        {
+            return UserID != null && _user != null;
+        }
+    }
+    public int? UserID { get; set; }
+
+    public AuthService(IServiceScopeFactory serviceScope, JwtOptions jwtOptions)
+    {
         _JWTOptions = jwtOptions;
+        _serviceScopeFactory = serviceScope;
+        using var scope = _serviceScopeFactory.CreateScope();
+        _userService = scope.ServiceProvider.GetRequiredService<IUserService>();
     }
 
     public async Task<ResponseOutcome<string>> LoginAsync(string username, string password)
@@ -29,17 +63,15 @@ public class AuthService : IAuthService
         UserDTO user = await _userService.FindAsync(LoginCredentials.Username);
         IEnumerable<UserPrivilegeDTO> privileges = await _userService.GetUserPrivilege((int)user.ID);
         string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, privileges);
-
+        UserID = (int)user.ID;
+        _user = user;
         return new ResponseOutcome<string>(Token, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}");
     }
-
-    public async Task<UserDTO> User(int id) // TODO: get id by implement singleton for auth service
+    public void Logout()
     {
-        return await _userService.FindAsync(id);
+        UserID = null;
+        _user = null;
     }
 
-    public async Task<IEnumerable<UserPrivilegeDTO>> UserPrivileges(int id)
-    {
-        return await _userService.GetUserPrivilege(id);
-    }
+
 }
