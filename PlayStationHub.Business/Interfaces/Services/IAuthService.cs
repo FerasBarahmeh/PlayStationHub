@@ -7,13 +7,13 @@ namespace PlayStationHub.Business.Interfaces.Services;
 public interface IAuthService
 {
     IEnumerable<UserPrivilegeDTO> Privileges { get; }
-    UserDTO AuthUser { get; }
+    UserDTO AuthenticatedUser { get; }
     public int? UserID { get; set; }
-    bool IsAuth { get; }
+    bool IsAuthenticated { get; }
     bool IsAdmin { get; }
     bool IsUser { get; }
     bool IsOwner { get; }
     Task<ResponseOutcome<string>> LoginAsync(string username, string password);
     void Logout();
-    void Refresh();
+    Task RefreshAsync();
 }

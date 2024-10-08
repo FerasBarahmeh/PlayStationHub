@@ -11,85 +11,73 @@ namespace PlayStationHub.Business.Services;
 
 public class AuthService : IAuthService
 {
-    private IUserService _userService;
-    private readonly JwtOptions _JWTOptions;
-    private IServiceScopeFactory _serviceScopeFactory;
+    private readonly IUserService _userService;
+    private readonly JwtOptions _jwtOptions;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
     private IEnumerable<UserPrivilegeDTO> _privileges;
-    private UserDTO _user;
+    private UserDTO _authenticatedUser;
 
-    public IEnumerable<UserPrivilegeDTO> Privileges
+    public AuthService(IServiceScopeFactory serviceScopeFactory, JwtOptions jwtOptions)
     {
-        get
-        {
-            if (UserID == null || _user == null) return null;
-            if (UserID != null && _privileges == null) _SetUserPrivileges();
+        _jwtOptions = jwtOptions;
+        _serviceScopeFactory = serviceScopeFactory;
 
-            return _privileges;
-        }
-    }
-
-    public UserDTO AuthUser
-    {
-        get
-        {
-            return _user;
-        }
-    }
-    public bool IsAuth
-    {
-        get
-        {
-            return UserID != null && _user != null;
-        }
-    }
-    public int? UserID { get; set; }
-
-    public bool IsAdmin => _HasPrivilege(nameof(Enums.Privileges.Admin));
-    public bool IsOwner => _HasPrivilege(nameof(Enums.Privileges.Owner));
-    public bool IsUser => _HasPrivilege(nameof(Enums.Privileges.User));
-
-    public AuthService(IServiceScopeFactory serviceScope, JwtOptions jwtOptions)
-    {
-        _JWTOptions = jwtOptions;
-        _serviceScopeFactory = serviceScope;
         using var scope = _serviceScopeFactory.CreateScope();
         _userService = scope.ServiceProvider.GetRequiredService<IUserService>();
     }
 
+    public IEnumerable<UserPrivilegeDTO> Privileges => _privileges;
+    public UserDTO AuthenticatedUser => _authenticatedUser;
+    public int? UserID { get; set; }
+    public bool IsAuthenticated => UserID != null && _authenticatedUser != null;
+
+    public bool IsAdmin => HasPrivilege(Enums.Privileges.Admin.ToString());
+    public bool IsOwner => HasPrivilege(Enums.Privileges.Owner.ToString());
+    public bool IsUser => HasPrivilege(Enums.Privileges.User.ToString());
+
     public async Task<ResponseOutcome<string>> LoginAsync(string username, string password)
     {
-        var LoginCredentials = await _userService.GetUserCredentialsByUsernameAsync(username);
-        if (LoginCredentials == null || !Hashing.CompareHashed(password, LoginCredentials.Password))
-            return new ResponseOutcome<string>(null, HttpStatusCode.Unauthorized, "Not found username or password in our credentials");
+        var loginCredentials = await _userService.GetUserCredentialsByUsernameAsync(username);
 
-        UserDTO user = await _userService.FindAsync(LoginCredentials.Username);
-        Init(user);
-        string Token = AuthenticationHelper.GenerateToken(_JWTOptions, user, Privileges);
+        if (loginCredentials == null || !Hashing.CompareHashed(password, loginCredentials.Password))
+        {
+            return new ResponseOutcome<string>(null, HttpStatusCode.Unauthorized, "Invalid username or password");
+        }
 
-        return new ResponseOutcome<string>(Token, HttpStatusCode.OK, $"Welcome Back {LoginCredentials.Username}");
+        var user = await _userService.FindAsync(loginCredentials.Username);
+        await InitializeSessionAsync(user);
+
+        var token = AuthenticationHelper.GenerateToken(_jwtOptions, user, _privileges.Select(privilege => privilege.Name).ToList());
+
+        return new ResponseOutcome<string>(token, HttpStatusCode.OK, $"Welcome back, {loginCredentials.Username}");
     }
+
     public void Logout()
     {
         UserID = null;
-        _user = null;
-    }
-    public async void Refresh()
-    {
-        _user = await _userService.FindAsync((int)UserID);
+        _authenticatedUser = null;
         _privileges = null;
     }
-    private async void _SetUserPrivileges()
+
+    public async Task RefreshAsync()
     {
-        _privileges = await _userService.GetUserPrivilege((int)UserID);
+        if (UserID.HasValue)
+        {
+            _authenticatedUser = await _userService.FindAsync(UserID.Value);
+            _privileges = await _userService.GetUserPrivilege(UserID.Value);
+        }
     }
-    private bool _HasPrivilege(string privilegeName)
+
+    private bool HasPrivilege(string privilegeName)
     {
-        return !string.IsNullOrEmpty(Privileges?.FirstOrDefault(privilege => privilege.Name == privilegeName)?.Name);
+        return _privileges?.Any(privilege => privilege.Name == privilegeName) ?? false;
     }
-    private async void Init(UserDTO user)
+
+    private async Task InitializeSessionAsync(UserDTO user)
     {
-        UserID = (int)user.ID;
-        _user = user;
-        _privileges = await _userService.GetUserPrivilege((int)UserID);
+        UserID = user.ID;
+        _authenticatedUser = user;
+        _privileges = await _userService.GetUserPrivilege((int)user.ID);
     }
 }
+

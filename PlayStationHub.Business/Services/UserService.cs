@@ -125,6 +125,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
     public async Task<IEnumerable<UserPrivilegeDTO>> GetUserPrivilege(int id)
     {
         var privileges = await _Repository.GetUserPrivilege(id);
+        var privilegesNew = UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
         return UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
     }
 }

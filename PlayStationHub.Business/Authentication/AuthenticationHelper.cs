@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,7 +17,7 @@ public class AuthenticationHelper
     {
         return new SymmetricSecurityKey(GetAuthKey(StringSigningKey));
     }
-    public static string GenerateToken(JwtOptions jwtOptions, UserDTO user, IEnumerable<UserPrivilegeDTO> privileges)
+    public static string GenerateToken(JwtOptions jwtOptions, UserDTO user, List<string> privileges)
     {
         var claims = new List<Claim>
         {
@@ -29,7 +28,7 @@ public class AuthenticationHelper
             new("Status", user.Status.ToString()),
             new("StatusName", user.StatusName.ToString()),
         }
-            .Concat(privileges.Select(role => new Claim(ClaimTypes.Role, role.Name)))
+            .Concat(privileges.Select(role => new Claim(ClaimTypes.Role, role)))
             .ToList();
 
         var token = new JwtSecurityToken(

@@ -39,10 +39,10 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
         return Ok(new ResponseOutcome<object>(true, Token.StatusCode, Token.Message));
     }
 
-    [HttpGet("IsAuth")]
+    [HttpGet("Check")]
     public IActionResult IsAuth()
     {
-        return User.Identity.IsAuthenticated ? Ok(true) : Unauthorized(false);
+        return _Service.IsAuthenticated ? Ok(true) : Unauthorized(false);
     }
 
     [HttpPost("logout")]
