@@ -1,4 +1,4 @@
-﻿namespace PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Async;
+﻿namespace PlayStationHub.Business.Interfaces.BasicOperation.Async;
 
 public interface IIsExistAsync
 {

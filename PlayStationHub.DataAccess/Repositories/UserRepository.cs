@@ -9,12 +9,10 @@ namespace PlayStationHub.DataAccess.Repositories;
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
     public UserRepository(IConfiguration configuration) : base(configuration) { }
-    public async Task<IEnumerable<User>> AllAsync()
+
+    public async Task<IEnumerable<User>> PagedTableAsync(int PageNumber, int PageSize)
     {
-        return await PredicateExecuteReaderAsync("SELECT * FROM Users;", reader =>
-        {
-            return User.GenerateOne(reader);
-        });
+        return await PagedTableAsync("SELECT * FROM vw_Users  ORDER BY ID", PageNumber, PageSize, reader => User.GenerateOne(reader));
     }
     public async Task<bool> IsExistAsync(string Username)
     {

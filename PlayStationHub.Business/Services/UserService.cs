@@ -43,11 +43,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
         set { _privileges = value; }
     }
     public UserService(IUserRepository repo) : base(repo) { }
-    public async Task<IEnumerable<UserDTO>> AllAsync()
-    {
-        var users = await _Repository.AllAsync();
-        return UserMapper.ToUserDTO(users);
-    }
+
     public async Task<bool> IsExistAsync(string Username)
     {
         return await _Repository.IsExistAsync(Username);
@@ -127,5 +123,11 @@ public class UserService : BaseService<IUserRepository>, IUserService
         var privileges = await _Repository.GetUserPrivilege(id);
         var privilegesNew = UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
         return UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
+    }
+
+    public async Task<IEnumerable<UserDTO>> PagedTableAsync(int PageNumber, int PageSize)
+    {
+        var users = await _Repository.PagedTableAsync(PageNumber, PageSize);
+        return UserMapper.ToUserDTO(users);
     }
 }

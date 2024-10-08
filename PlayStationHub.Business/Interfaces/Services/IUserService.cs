@@ -1,12 +1,13 @@
 ﻿using PlayStationHub.Business.DataTransferObject.Privileges;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Enums;
-using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Async;
-using PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Sync;
+using PlayStationHub.Business.Interfaces.BasicOperation.Async;
+using PlayStationHub.Business.Interfaces.BasicOperation.Sync;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
-public interface IUserService : IAllAsync<UserDTO>, IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync, IIsExist
+
+public interface IUserService : IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync, IIsExist, PagedTableAsync<UserDTO>
 {
     public ModeStatus Mode { get; }
     public string Password { get; set; }

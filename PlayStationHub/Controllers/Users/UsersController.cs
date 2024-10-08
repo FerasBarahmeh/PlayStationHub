@@ -25,9 +25,9 @@ public class UsersController : BaseController<IUserService>
 
     [HttpGet]
     [Authorize(Roles = nameof(Privileges.Admin))]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> All()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> All(int pageNumber = 1, int pageSize = 10)
     {
-        var users = await _Service.AllAsync();
+        var users = await _Service.PagedTableAsync(pageNumber, pageSize);
         if (users == null) return NoContent();
 
         return Ok(new ResponseOutcome<IEnumerable<UserDTO>>(

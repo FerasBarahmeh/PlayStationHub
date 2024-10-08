@@ -1,4 +1,4 @@
-﻿namespace PlayStationHub.Business.Interfaces.Repositories.BasicOperation.Sync;
+﻿namespace PlayStationHub.Business.Interfaces.BasicOperation.Sync;
 
 public interface IIsExist
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
+using System.Data;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
@@ -147,5 +148,17 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
             }
         }
         return RowAffected;
+    }
+
+    public async Task<IEnumerable<T>> PagedTableAsync(string sql, int pageNumber, int pageSize, Func<SqlDataReader, T> reader)
+    {
+        return await PredicateExecuteReaderAsync("SP_TablePagination", async (SqlCommand cmd) =>
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Query", sql);
+            cmd.Parameters.AddWithValue("@PageNumber", pageNumber);
+            cmd.Parameters.AddWithValue("@PageSize", pageSize);
+            await Task.CompletedTask;
+        }, reader);
     }
 }
