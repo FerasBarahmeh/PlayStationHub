@@ -2,5 +2,5 @@
 
 public interface IResponseOutcome<T> : IResponseStructure
 {
-    T Data { get; set; }
+    T Response { get; set; }
 }

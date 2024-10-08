@@ -6,22 +6,22 @@ namespace Utilities.Response;
 
 public class ResponseOutcome<T> : BaseAttributesForResponseStructure, IResponseOutcome<T>, IMetadata<Metadata>
 {
-    public T Data { get; set; }
+    public T Response { get; set; }
 
-    public override bool HasError => Data == null;
+    public override bool HasError => Response == null;
 
     public Metadata Metadata { get; set; }
 
     public ResponseOutcome(T data, HttpStatusCode status, string message)
     {
-        Data = data;
+        Response = data;
         StatusCode = status;
         Message = message;
         Metadata = null;
     }
     public ResponseOutcome(T data, HttpStatusCode status, string message, Metadata metadata)
     {
-        Data = data;
+        Response = data;
         StatusCode = status;
         Message = message;
         Metadata = metadata;

@@ -7,7 +7,7 @@ public class NullableResponseData : BaseAttributesForResponseStructure, INullabl
 {
     public override bool HasError => true;
 
-    public object Data => null;
+    public object Response => null;
 
     public NullableResponseData(HttpStatusCode status, string messages)
     {

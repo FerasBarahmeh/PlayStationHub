@@ -34,7 +34,7 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
             Expires = DateTime.UtcNow.AddMinutes(int.Parse(_JWTOptions.Lifetime)),
         };
 
-        Response.Cookies.Append("jwtToken", Token.Data.ToString(), cookieOptions);
+        Response.Cookies.Append("jwtToken", Token.Response.ToString(), cookieOptions);
 
         return Ok(new ResponseOutcome<object>(true, Token.StatusCode, Token.Message));
     }

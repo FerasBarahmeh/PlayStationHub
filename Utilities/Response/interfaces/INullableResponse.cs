@@ -2,5 +2,5 @@
 
 public interface INullableResponse
 {
-    object Data { get; }
+    object Response { get; }
 }
