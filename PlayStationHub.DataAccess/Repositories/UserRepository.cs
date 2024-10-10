@@ -135,4 +135,9 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             return UserPrivilege.GenerateOne(reader);
         });
     }
+    public async Task<int> CountRows()
+    {
+        string Query = "SELECT COUNT(*) FROM Users;";
+        return await PredicateExecuteScalarAsync<int>(Query);
+    }
 }

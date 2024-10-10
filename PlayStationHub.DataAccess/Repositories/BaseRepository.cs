@@ -1,11 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
-public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
+public abstract class BaseRepository<T>
 {
     protected readonly string _ConnectionString;
     public BaseRepository(IConfiguration configuration)
@@ -95,7 +94,6 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         }
         return Record;
     }
-
     public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
     {
         ReturnType Result = default;
@@ -109,12 +107,10 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
 
                 if (ScalerResult != null && ScalerResult != DBNull.Value)
                     Result = (ReturnType)Convert.ChangeType(ScalerResult, typeof(ReturnType));
-
             }
         }
         return Result;
     }
-
     public TReturnType PredicateExecuteScalar<TReturnType>(string query, Action<SqlCommand> setParameters)
     {
         TReturnType result = default;
@@ -133,7 +129,22 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         }
         return result;
     }
+    public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query)
+    {
+        ReturnType Result = default;
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await conn.OpenAsync();
+                object ScalerResult = await cmd.ExecuteScalarAsync();
 
+                if (ScalerResult != null && ScalerResult != DBNull.Value)
+                    Result = (ReturnType)Convert.ChangeType(ScalerResult, typeof(ReturnType));
+            }
+        }
+        return Result;
+    }
     public async Task<int> PredicateExecuteNonQueryAsync(string Query, Func<SqlCommand, Task> SetParams)
     {
         int RowAffected = 0;
@@ -149,7 +160,6 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
         }
         return RowAffected;
     }
-
     public async Task<IEnumerable<T>> PagedTableAsync(string sql, int pageNumber, int pageSize, Func<SqlDataReader, T> reader)
     {
         return await PredicateExecuteReaderAsync("SP_TablePagination", async (SqlCommand cmd) =>
