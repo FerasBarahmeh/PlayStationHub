@@ -640,6 +640,16 @@
         "runtime": {
           "lib/netcoreapp2.1/_._": {}
         }
+      },
+      "Utilities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Utilities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Utilities.dll": {}
+        }
       }
     }
   },
@@ -1824,12 +1834,18 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Utilities/1.0.0": {
+      "type": "project",
+      "path": "../Utilities/Utilities.csproj",
+      "msbuildProject": "../Utilities/Utilities.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Microsoft.Data.SqlClient >= 5.2.2",
-      "Microsoft.Extensions.Configuration >= 8.0.0"
+      "Microsoft.Extensions.Configuration >= 8.0.0",
+      "Utilities >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1858,7 +1874,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj": {
+              "projectPath": "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

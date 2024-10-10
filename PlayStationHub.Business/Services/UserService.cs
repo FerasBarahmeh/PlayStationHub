@@ -12,6 +12,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
 {
     public ModeStatus Mode => (UserModel.ID == null) ? ModeStatus.Insert : ModeStatus.Update;
     public UserDTO UserModel { get; set; }
+
     private string _Password;
     public string Password
     {
@@ -31,17 +32,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
             _Password = null;
         }
     }
-    private Task<IEnumerable<UserPrivilegeDTO>> _privileges;
-    public Task<IEnumerable<UserPrivilegeDTO>> Privileges
-    {
-        get
-        {
-            if (_privileges == null && UserModel.ID != null)
-                _privileges = GetUserPrivilege((int)UserModel.ID);
-            return _privileges;
-        }
-        set { _privileges = value; }
-    }
+
     public UserService(IUserRepository repo) : base(repo) { }
 
     public async Task<bool> IsExistAsync(string Username)
@@ -75,7 +66,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
 
         return ID;
     }
-    public async Task<int?> _Update()
+    private async Task<int?> _Update()
     {
         var user = UserMapper.ToUser(UserModel);
         int? ID = await _Repository.UpdateAsync(user);
@@ -100,7 +91,6 @@ public class UserService : BaseService<IUserRepository>, IUserService
             }
         }
         return false;
-
     }
 
     public async Task<bool> DeleteAsync(int ID)

@@ -95,7 +95,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

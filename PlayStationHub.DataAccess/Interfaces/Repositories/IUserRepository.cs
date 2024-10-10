@@ -1,10 +1,11 @@
 ﻿using PlayStationHub.DataAccess.Entities;
-using PlayStationHub.DataAccess.Interfaces.Repositories.BasicOperation;
-using PlayStationHub.DataAccess.Interfaces.Repositories.BasicOperation.Async;
+using PlayStationHub.Utilities.Interfaces.BasicOperation.Async;
+using PlayStationHub.Utilities.Interfaces.BasicOperation.Sync;
 
 namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
-public interface IUserRepository : IBaseBasicOperationRepository<User>, IPagedTableAsync<User>, ICountRowsAsync
+public interface IUserRepository :
+    IFindAsync<User>, IIsExistAsync, IIsExist, IDeleteAsync<int>, IInsertAsync<User>, IPagedTableAsync<User>, ICountRowsAsync, IUpdateAsync<User>
 {
     Task<User> FindAsync(string Username);
     Task<bool> IsExistAsync(string Username);

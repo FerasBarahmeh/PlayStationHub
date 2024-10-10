@@ -23,3 +23,6 @@ C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\refint\Pl
 C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.pdb
 C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\ref\PlayStationHub.DataAccess.dll
 C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.sourcelink.json
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\bin\Debug\net8.0\Utilities.dll
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\bin\Debug\net8.0\Utilities.pdb
+C:\Container\PlayStationHub\PlayStationHub.DataAccess\obj\Debug\net8.0\PlayStationHub.DataAccess.csproj.CopyComplete

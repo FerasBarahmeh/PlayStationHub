@@ -427,7 +427,8 @@
       "PlayStationHub.DataAccess/1.0.0": {
         "dependencies": {
           "Microsoft.Data.SqlClient": "5.2.2",
-          "Microsoft.Extensions.Configuration": "8.0.0"
+          "Microsoft.Extensions.Configuration": "8.0.0",
+          "Utilities": "1.0.0"
         },
         "runtime": {
           "PlayStationHub.DataAccess.dll": {}

@@ -1,6 +1,0 @@
-﻿namespace PlayStationHub.DataAccess.Interfaces.Repositories.BasicOperation.Async;
-
-public interface IAllAsync<T>
-{
-    Task<IEnumerable<T>> AllAsync();
-}

@@ -681,7 +681,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Microsoft.Data.SqlClient": "5.2.2",
-          "Microsoft.Extensions.Configuration": "8.0.0"
+          "Microsoft.Extensions.Configuration": "8.0.0",
+          "Utilities": "1.0.0"
         },
         "compile": {
           "bin/placeholder/PlayStationHub.DataAccess.dll": {}

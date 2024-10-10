@@ -1,4 +1,4 @@
-﻿namespace PlayStationHub.Business.Interfaces.BasicOperation.Async;
+﻿namespace PlayStationHub.Utilities.Interfaces.BasicOperation.Async;
 
 public interface IFindAsync<T>
 {
