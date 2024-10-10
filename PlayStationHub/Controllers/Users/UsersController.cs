@@ -34,8 +34,8 @@ public class UsersController : BaseController<IUserService>
         return Ok(new PagedResponse<UserDTO>
         {
             Data = users,
-            PageNumber = pageNumber,
-            PageSize = pageSize,
+            SlideNumber = pageNumber,
+            SlideSize = pageSize,
             TotalCount = await _Service.CountRowsAsync(),
             StatusCode = HttpStatusCode.OK,
             Message = $"this is slide number {pageNumber}"
