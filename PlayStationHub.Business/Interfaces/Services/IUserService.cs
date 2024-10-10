@@ -7,7 +7,7 @@ using PlayStationHub.Business.Interfaces.BasicOperation.Sync;
 namespace PlayStationHub.Business.Interfaces.Services;
 
 
-public interface IUserService : IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync, IIsExist, PagedTableAsync<UserDTO>
+public interface IUserService : IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync, IIsExist, PagedTableAsync<UserDTO>, ICountRowsAsync
 {
     public ModeStatus Mode { get; }
     public string Password { get; set; }

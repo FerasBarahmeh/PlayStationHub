@@ -130,4 +130,9 @@ public class UserService : BaseService<IUserRepository>, IUserService
         var users = await _Repository.PagedTableAsync(PageNumber, PageSize);
         return UserMapper.ToUserDTO(users);
     }
+
+    public async Task<int> CountRowsAsync()
+    {
+        return await _Repository.CountRowsAsync();
+    }
 }

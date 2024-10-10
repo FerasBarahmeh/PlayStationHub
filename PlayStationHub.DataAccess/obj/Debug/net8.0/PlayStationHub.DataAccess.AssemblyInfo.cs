@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f09690d8ed25fafd6304af36a1fbda72369ead41")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fe831a43b49e0c573ebfbd69c85a041ba2508c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

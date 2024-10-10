@@ -12,6 +12,7 @@ public abstract class BaseRepository<T>
         _ConnectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
+    #region Predicate execute reader
     public async Task<IEnumerable<T>> PredicateExecuteReaderAsync(string Query, Func<SqlDataReader, T> Logic)
     {
         List<T> Records = new List<T>();
@@ -74,26 +75,9 @@ public abstract class BaseRepository<T>
         }
         return Records;
     }
-    public async Task<T> PredicateExecuteReaderForOneRecordAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
-    {
-        T Record = default;
-        using (SqlConnection conn = new SqlConnection(_ConnectionString))
-        {
-            using (SqlCommand cmd = new SqlCommand(Query, conn))
-            {
-                await SetParameters(cmd);
-                await conn.OpenAsync();
-                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        Record = Logic(reader);
-                    }
-                }
-            }
-        }
-        return Record;
-    }
+    #endregion
+
+    #region Predicate Execute Scalar
     public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
     {
         ReturnType Result = default;
@@ -145,6 +129,32 @@ public abstract class BaseRepository<T>
         }
         return Result;
     }
+    #endregion
+
+    #region Predicate execure reader for one recored
+    public async Task<T> PredicateExecuteReaderForOneRecordAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
+    {
+        T Record = default;
+        using (SqlConnection conn = new SqlConnection(_ConnectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand(Query, conn))
+            {
+                await SetParameters(cmd);
+                await conn.OpenAsync();
+                using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Record = Logic(reader);
+                    }
+                }
+            }
+        }
+        return Record;
+    }
+    #endregion
+
+    #region Predicate execute non query
     public async Task<int> PredicateExecuteNonQueryAsync(string Query, Func<SqlCommand, Task> SetParams)
     {
         int RowAffected = 0;
@@ -160,6 +170,9 @@ public abstract class BaseRepository<T>
         }
         return RowAffected;
     }
+    #endregion
+
+    #region Paged table
     public async Task<IEnumerable<T>> PagedTableAsync(string sql, int pageNumber, int pageSize, Func<SqlDataReader, T> reader)
     {
         return await PredicateExecuteReaderAsync("SP_TablePagination", async (SqlCommand cmd) =>
@@ -171,4 +184,5 @@ public abstract class BaseRepository<T>
             await Task.CompletedTask;
         }, reader);
     }
+    #endregion
 }

@@ -4,7 +4,7 @@ using PlayStationHub.DataAccess.Interfaces.Repositories.BasicOperation.Async;
 
 namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
-public interface IUserRepository : IBaseBasicOperationRepository<User>, IPagedTableAsync<User>
+public interface IUserRepository : IBaseBasicOperationRepository<User>, IPagedTableAsync<User>, ICountRowsAsync
 {
     Task<User> FindAsync(string Username);
     Task<bool> IsExistAsync(string Username);

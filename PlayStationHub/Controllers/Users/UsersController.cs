@@ -9,6 +9,7 @@ using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
 using System.Net;
 using Utilities.Response;
+using Utilities.Response.interfaces;
 
 namespace PlayStationHub.API.Controllers.Users;
 
@@ -25,20 +26,21 @@ public class UsersController : BaseController<IUserService>
 
     [HttpGet]
     [Authorize(Roles = nameof(Privileges.Admin))]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> All(int pageNumber = 1, int pageSize = 10)
+    public async Task<ActionResult<IPagedResponse<UserDTO>>> All(int pageNumber = 1, int pageSize = 10)
     {
         var users = await _Service.PagedTableAsync(pageNumber, pageSize);
         if (users == null) return NoContent();
 
-        return Ok(new ResponseOutcome<IEnumerable<UserDTO>>(
-            users,
-            System.Net.HttpStatusCode.OK,
-            "Success fetch all users",
-            new Utilities.Response.ThirdParty.Metadata()
-            .Push("CountUsers", users.Count())
-            ));
+        return Ok(new PagedResponse<UserDTO>
+        {
+            Data = users,
+            PageNumber = pageNumber,
+            PageSize = pageSize,
+            TotalCount = await _Service.CountRowsAsync(),
+            StatusCode = HttpStatusCode.OK,
+            Message = $"this is slide number {pageNumber}"
+        });
     }
-
 
     [HttpGet("Find/{ID}")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
