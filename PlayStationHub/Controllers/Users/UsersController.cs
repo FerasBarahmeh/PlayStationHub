@@ -107,4 +107,12 @@ public class UsersController : BaseController<IUserService>
 
         return Ok(new ResponseOutcome<UserDTO>(_Service.UserModel, HttpStatusCode.OK, "Success Update you profile"));
     }
+
+
+    [HttpGet("Count")]
+    [Authorize(Roles = nameof(Privileges.Admin))]
+    public async Task<IActionResult> UsersCount()
+    {
+        return Ok(new ResponseOutcome<int>(await _Service.CountRowsAsync(), HttpStatusCode.OK, ""));
+    }
 }
