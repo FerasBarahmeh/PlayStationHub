@@ -10,3 +10,15 @@ C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.dll
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\refint\Utilities.dll
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.pdb
 C:\Container\PlayStationHub\Utilities\obj\Debug\net8.0\ref\Utilities.dll
+D:\Projects\PlayStationHub\Utilities\bin\Debug\net8.0\Utilities.deps.json
+D:\Projects\PlayStationHub\Utilities\bin\Debug\net8.0\Utilities.dll
+D:\Projects\PlayStationHub\Utilities\bin\Debug\net8.0\Utilities.pdb
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfoInputs.cache
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfo.cs
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.csproj.CoreCompileInputs.cache
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.sourcelink.json
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.dll
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\refint\Utilities.dll
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\Utilities.pdb
+D:\Projects\PlayStationHub\Utilities\obj\Debug\net8.0\ref\Utilities.dll

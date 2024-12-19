@@ -1968,19 +1968,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\feras\\.nuget\\packages\\": {}
+    "C:\\Users\\Feras Barahmeh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Container\\PlayStationHub\\PlayStationHub.Business\\PlayStationHub.Business.csproj",
+      "projectUniqueName": "D:\\Projects\\PlayStationHub\\PlayStationHub.Business\\PlayStationHub.Business.csproj",
       "projectName": "PlayStationHub.Business",
-      "projectPath": "C:\\Container\\PlayStationHub\\PlayStationHub.Business\\PlayStationHub.Business.csproj",
-      "packagesPath": "C:\\Users\\feras\\.nuget\\packages\\",
-      "outputPath": "C:\\Container\\PlayStationHub\\PlayStationHub.Business\\obj\\",
+      "projectPath": "D:\\Projects\\PlayStationHub\\PlayStationHub.Business\\PlayStationHub.Business.csproj",
+      "packagesPath": "C:\\Users\\Feras Barahmeh\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\PlayStationHub\\PlayStationHub.Business\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\feras\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Feras Barahmeh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1988,17 +1988,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Container\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj": {
-              "projectPath": "C:\\Container\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj"
+            "D:\\Projects\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj": {
+              "projectPath": "D:\\Projects\\PlayStationHub\\PlayStationHub.DataAccess\\PlayStationHub.DataAccess.csproj"
             },
-            "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj": {
-              "projectPath": "C:\\Container\\PlayStationHub\\Utilities\\Utilities.csproj"
+            "D:\\Projects\\PlayStationHub\\Utilities\\Utilities.csproj": {
+              "projectPath": "D:\\Projects\\PlayStationHub\\Utilities\\Utilities.csproj"
             }
           }
         }
@@ -2007,6 +2008,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2034,7 +2040,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
