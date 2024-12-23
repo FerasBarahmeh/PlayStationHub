@@ -1,14 +1,21 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
+using PlayStationHub.DataAccess.Interfaces.Repositories;
+using System.Data;
+using System.Reflection.PortableExecutable;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
-public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>(configuration)
+public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>(configuration), IClubRepository
 {
-    int ID { get; set; }
-    public string Name { get; set; }
-    public string Location { get; set; }
-    public string Owner { get; set; }
-    public int DeviceCount { get; set; }
+    public async Task<IEnumerable<Club>> AllAsync()
+    {
+        
+        return await PredicateExecuteReaderAsync("select * from Clubs;", (reader) =>
+        {
+            return Club.GenerateOne(reader);
+        });
+    }
 }
 

@@ -12,10 +12,12 @@ public static class DependencyInjection
     {
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
+        builder.Services.AddScoped<IClubService, ClubService>();
     }
     public static void AddRepositoriesDependencies(ref WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IClubRepository, ClubRepository>();
     }
 
     public static void AddFilters(ref WebApplicationBuilder builder)
