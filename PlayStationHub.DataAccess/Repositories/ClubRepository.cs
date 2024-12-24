@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
+using PlayStationHub.DataAccess.Generatories;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 using System.Reflection.PortableExecutable;
@@ -14,7 +15,7 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
         
         return await PredicateExecuteReaderAsync("select * from Clubs;", (reader) =>
         {
-            return Club.GenerateOne(reader);
+            return ClubEntityGenerator.GenerateClubEntity(reader);
         });
     }
 }
