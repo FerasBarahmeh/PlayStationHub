@@ -1,5 +1,4 @@
 ﻿using PlayStationHub.Business.DataTransferObject.Clubs;
-using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.DataAccess.Entities;
 
 namespace PlayStationHub.Business.Mappers;
@@ -16,7 +15,7 @@ public class ClubMapper
                 ID = club.ID,
                 Name = club.Name,
                 DeviceCount = club.DeviceCount,
-                OwnerID = club.OwnerID,
+                Owner = club.Owner,
                 Location = club.Location,
             });
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
+using PlayStationHub.DataAccess.Generatories;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 
@@ -12,7 +13,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public async Task<IEnumerable<User>> PagedTableAsync(int PageNumber, int PageSize)
     {
-        return await PagedTableAsync("SELECT * FROM vw_Users  ORDER BY ID", PageNumber, PageSize, reader => User.GenerateOne(reader));
+        return await PagedTableAsync("SELECT * FROM vw_Users  ORDER BY ID", PageNumber, PageSize, reader => UserEntityGenerator.Generate(reader));
     }
     public async Task<bool> IsExistAsync(string Username)
     {
@@ -47,7 +48,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             await Task.CompletedTask;
         }, reader =>
         {
-            return User.GenerateOne(reader);
+            return UserEntityGenerator.Generate(reader);
         });
     }
     public async Task<User> FindAsync(int ID)
@@ -106,7 +107,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
         }, reader =>
         {
-            return User.GenerateOne(reader);
+            return UserEntityGenerator.Generate(reader);
         });
 
     }

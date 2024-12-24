@@ -5,14 +5,19 @@ namespace PlayStationHub.DataAccess.Generatories;
 
 public class ClubEntityGenerator
 {
-    public static Club GenerateClubEntity(SqlDataReader reader)
+    public static Club Generate(SqlDataReader reader)
     {
         return new Club
         {
-            ID = reader.GetInt32(reader.GetOrdinal("ID")),
+            ID = reader.GetInt32(reader.GetOrdinal("ClubID")),
             Name = reader.GetString(reader.GetOrdinal("Name")),
             Location = reader.GetString(reader.GetOrdinal("Location")),
-            OwnerID = reader.GetInt32(reader.GetOrdinal("OwnerID")),
+            Owner = new Owner
+            {
+                ID = reader.GetInt32(reader.GetOrdinal("OwnerID")),
+                AddedBy = AdminEntityGenerator.Generate(reader, "Admin", "Admin"),
+                User = UserEntityGenerator.Generate(reader, "Owner"),
+            },
             DeviceCount = reader.GetByte(reader.GetOrdinal("DeviceCount"))
         };
     }
