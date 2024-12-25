@@ -21,4 +21,8 @@ public class ClubFeedbackService(IClubFeedbackRepository repo) : BaseService<ICl
     {
         return _Repository.IsExist(content);
     }
+    public bool HasFeedback(int clubID)
+    {
+        return _Repository.HasFeedback(clubID);
+    }
 }

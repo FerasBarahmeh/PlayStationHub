@@ -41,11 +41,20 @@ public class ClubFeedbackRepository(IConfiguration configuration) : BaseReposito
                             STRING_AGG(Feedback, ' ** ') + ' ""'
                         ) AS Prompt
                         FROM ClubFeedbacks
-                        WHERE ClubID = 7;
+                        WHERE ClubID = @ClubID;
                        ";
         return await PredicateExecuteScalarAsync<string>(Query, async (SqlCommand cmd) =>
         {
             cmd.Parameters.AddWithValue("@ClubID", ClubID);
+            await Task.CompletedTask;
+        });
+    }
+
+    public bool HasFeedback(int clubID)
+    {
+        return PredicateExecuteScalar<bool>("select Found=1 from ClubFeedbacks where ClubID = @ClubID group by ClubID;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@ClubID", clubID);
             await Task.CompletedTask;
         });
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
+using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
 using System.Net;
@@ -25,11 +26,13 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
     }
 
     [HttpPost("GenerateSummary")]
-    public async Task<IActionResult> GenerateSummary()
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    [Authorize(Roles = nameof(Privileges.Admin))]
+    public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubRequest ClubID)
     {
         try
         {
-            var result = await _geminiService.GenerateResponseAsync(7);
+            var result = await _geminiService.GenerateResponseAsync(ClubID.ClubID);
             
             var jsonObject = JsonDocument.Parse(result);
 
