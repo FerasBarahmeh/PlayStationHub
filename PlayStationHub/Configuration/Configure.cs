@@ -1,4 +1,5 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -84,12 +85,19 @@ public static class Configure
     }
     public static void AddControllers(ref WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers()
-            .AddFluentValidation(fv =>
-            {
-                fv.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-                fv.DisableDataAnnotationsValidation = true;
-            });
+        builder.Services.AddControllers();
+
+        builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+        builder.Services.AddFluentValidationAutoValidation(options =>
+        {
+            options.DisableDataAnnotationsValidation = true;
+        });
+        //builder.Services.AddControllers()
+        //    .AddFluentValidation(fv =>
+        //    {
+        //        fv.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+        //        fv.DisableDataAnnotationsValidation = true;
+        //    });
 
     }
 }

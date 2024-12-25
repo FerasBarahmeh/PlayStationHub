@@ -10,10 +10,12 @@ public static class DependencyInjection
 {
     public static void AddServicesDependencies(ref WebApplicationBuilder builder)
     {
+        builder.Services.AddHttpClient();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
         builder.Services.AddScoped<IClubService, ClubService>();
         builder.Services.AddScoped<IClubFeedbackService, ClubFeedbackService>();
+        builder.Services.AddScoped<IGeminiService, GeminiService>();
     }
     public static void AddRepositoriesDependencies(ref WebApplicationBuilder builder)
     {
