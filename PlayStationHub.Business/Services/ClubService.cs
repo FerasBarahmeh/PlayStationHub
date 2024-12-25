@@ -16,4 +16,9 @@ public class ClubService : BaseService<IClubRepository>, IClubService
         var clubs = await _Repository.AllAsync();
         return ClubMapper.ToClubDTO(clubs);
     }
+
+    public bool IsExist(int ID)
+    {
+        return _Repository.IsExist(ID);
+    }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlayStationHub.Business")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+718d61802ff752fb7210ced9ff66379d8f62bc5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+527108e9a27a82062b2e7f6275eb6d9a5b3bdb2f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlayStationHub.Business")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlayStationHub.Business")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
