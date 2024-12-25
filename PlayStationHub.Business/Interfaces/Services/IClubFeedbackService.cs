@@ -6,4 +6,5 @@ namespace PlayStationHub.Business.Interfaces.Services;
 
 public interface IClubFeedbackService : IInsertAsync<ClubFeedbackDTO>, IIsExistByContent
 {
+     Task<string> GeneratePrompt(int ClubID);
 }

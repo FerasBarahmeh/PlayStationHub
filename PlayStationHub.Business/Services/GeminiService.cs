@@ -23,16 +23,16 @@ public class GeminiService :  IGeminiService
         _ClubFeedbackService = clubFeedbackService;
     }
 
-    private  object GetFeedbacks(int ClubID)
+    private async Task<object> GetFeedbacks(int ClubID)
     {
-        
+        string prompt = await  _ClubFeedbackService.GeneratePrompt(ClubID);
         object request = new
         {
             contents = new[]
             {
               new {
                 parts = new[] {
-                    new { text = "What is C# in many words" }
+                    new { text = prompt }
                 }
               }
             }
@@ -43,7 +43,7 @@ public class GeminiService :  IGeminiService
 
     public async Task<string> GenerateResponseAsync(int ClubID)
     {
-        object _Request = GetFeedbacks(ClubID);
+        var _Request =  await GetFeedbacks(ClubID);
         var jsonContent = JsonSerializer.Serialize(_Request);
         var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
@@ -55,8 +55,6 @@ public class GeminiService :  IGeminiService
             throw new HttpRequestException($"Request failed with status {response.StatusCode}: {error}");
         }
 
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var responseData = JsonSerializer.Deserialize<JsonElement>(responseContent);
-        return responseData.ToString();
+        return await response.Content.ReadAsStringAsync();
     }
 }

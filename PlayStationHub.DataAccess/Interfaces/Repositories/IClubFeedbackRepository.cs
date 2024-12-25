@@ -6,5 +6,5 @@ namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
 public interface IClubFeedbackRepository: IInsertAsync<ClubFeedback>, IIsExistByContent
 {
-
+    Task<string> Prompt(int ClubID);
 }

@@ -5,7 +5,9 @@ using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
 using System.Net;
+using System.Text.Json;
 using Utilities.Response;
+using Utilities.Response.ThirdParty;
 
 namespace PlayStationHub.API.Controllers.Clubs;
 
@@ -28,7 +30,29 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
         try
         {
             var result = await _geminiService.GenerateResponseAsync(7);
-            return Ok(new { data = result });
+            
+            var jsonObject = JsonDocument.Parse(result);
+
+            var textContent = jsonObject
+                .RootElement
+                .GetProperty("candidates")[0]
+                .GetProperty("content")
+                .GetProperty("parts")[0]
+                .GetProperty("text")
+                .GetString();
+
+            var usageMetadata = jsonObject.RootElement.GetProperty("usageMetadata");
+           
+            var tokenInfo = new Dictionary<string, object>
+            {
+                { "PromptTokenCount", usageMetadata.GetProperty("promptTokenCount").GetInt32() },
+                { "CandidatesTokenCount", usageMetadata.GetProperty("candidatesTokenCount").GetInt32() },
+                { "TotalTokenCount",  usageMetadata.GetProperty("totalTokenCount").GetInt32() }
+            };
+
+            Metadata metadata = new Metadata(data: tokenInfo);
+
+            return Ok(new ResponseOutcome<string>(data: textContent, HttpStatusCode.OK, metadata: metadata, message: ""));
         }
         catch (Exception ex)
         {

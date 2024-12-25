@@ -33,4 +33,20 @@ public class ClubFeedbackRepository(IConfiguration configuration) : BaseReposito
             await Task.CompletedTask;
         });
     }
+
+    public async Task<string> Prompt(int ClubID)
+    {
+        string Query = @"SELECT CONCAT(
+	                        ' Write a summary for these comments ""',
+                            STRING_AGG(Feedback, ' ** ') + ' ""'
+                        ) AS Prompt
+                        FROM ClubFeedbacks
+                        WHERE ClubID = 7;
+                       ";
+        return await PredicateExecuteScalarAsync<string>(Query, async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@ClubID", ClubID);
+            await Task.CompletedTask;
+        });
+    }
 }

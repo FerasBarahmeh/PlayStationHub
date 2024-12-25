@@ -7,6 +7,11 @@ namespace PlayStationHub.Business.Services;
 
 public class ClubFeedbackService(IClubFeedbackRepository repo) : BaseService<IClubFeedbackRepository>(repo), IClubFeedbackService
 {
+    public async Task<string> GeneratePrompt(int ClubID)
+    {
+        return await _Repository.Prompt(ClubID);
+    }
+
     public async Task<int> InsertAsync(ClubFeedbackDTO InsertField)
     {
         return await _Repository.InsertAsync(ClubFeedbackMapper.ToClubFeedbackEntity(InsertField));
