@@ -13,11 +13,13 @@ public static class DependencyInjection
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddSingleton<IAuthService, AuthService>();
         builder.Services.AddScoped<IClubService, ClubService>();
+        builder.Services.AddScoped<IClubFeedbackService, ClubFeedbackService>();
     }
     public static void AddRepositoriesDependencies(ref WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IClubRepository, ClubRepository>();
+        builder.Services.AddScoped<IClubFeedbackRepository, ClubFeedbackRepository>();
     }
 
     public static void AddFilters(ref WebApplicationBuilder builder)
