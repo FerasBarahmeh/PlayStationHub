@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
+using PlayStationHub.Business.DataTransferObject.Clubs.Requests.interfaces;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
@@ -21,18 +22,27 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Insert(InsertFeedbackRequest feedback)
     {
-        int id = await _Service.InsertAsync(ClubFeedbackMapper.ToClubFeedbackDTO(feedback));
+       int id = await _Service.InsertAsync(ClubFeedbackMapper.ToClubFeedbackDTO(feedback));
        return Ok(new ResponseOutcome<int>(data: id, status: HttpStatusCode.OK, "Successfully inserted comment"));
+    }
+
+    [HttpPost("GetFeedbacks")]
+    [ServiceFilter(typeof (ValidationFilterAttribute))]
+    public async Task<ActionResult> GetFeedbacks(GetFeedbacksForClubRequest request)
+    {
+        IEnumerable<string> comments = await _Service.GetFeedbacks(request.ID);
+
+        return Ok(new ResponseOutcome<IEnumerable<string>>(data: comments.ToList(), HttpStatusCode.OK, message: "customers feedback"));
     }
 
     [HttpPost("GenerateSummary")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     [Authorize(Roles = nameof(Privileges.Admin))]
-    public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubRequest ClubID)
+    public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubRequest request)
     {
         try
         {
-            var result = await _geminiService.GenerateResponseAsync(ClubID.ClubID);
+            var result = await _geminiService.GenerateResponseAsync(request.ID);
             
             var jsonObject = JsonDocument.Parse(result);
 

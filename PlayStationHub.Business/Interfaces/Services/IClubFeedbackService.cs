@@ -8,4 +8,5 @@ public interface IClubFeedbackService : IInsertAsync<ClubFeedbackDTO>, IIsExistB
 {
     Task<string> GeneratePrompt(int ClubID);
     bool HasFeedback(int clubID);
+    Task<IEnumerable<string>> GetFeedbacks(int ClubID);
 }

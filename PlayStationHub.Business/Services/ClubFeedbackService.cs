@@ -26,4 +26,9 @@ public class ClubFeedbackService(IClubFeedbackRepository repo) : BaseService<ICl
     {
         return _Repository.HasFeedback(clubID);
     }
+
+    public async Task<IEnumerable<string>> GetFeedbacks(int ClubID)
+    {
+        return await _Repository.GetFeedbacks(ClubID);
+    }
 }

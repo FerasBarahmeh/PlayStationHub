@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
+using PlayStationHub.DataAccess.Generatories;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 
@@ -56,6 +57,18 @@ public class ClubFeedbackRepository(IConfiguration configuration) : BaseReposito
         {
             cmd.Parameters.AddWithValue("@ClubID", clubID);
             await Task.CompletedTask;
+        });
+    }
+
+    public async Task<IEnumerable<string>> GetFeedbacks(int ClubID)
+    {
+        return await PredicateExecuteReaderAsync("select Feedback from ClubFeedbacks where ClubID = @ClubID order by CreatedAt;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@ClubID", ClubID);
+            await Task.CompletedTask;
+        },(SqlDataReader reader) =>
+        {
+            return reader.GetString(reader.GetOrdinal("Feedback"));
         });
     }
 }

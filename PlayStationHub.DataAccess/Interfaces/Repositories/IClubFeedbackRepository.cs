@@ -8,4 +8,5 @@ public interface IClubFeedbackRepository: IInsertAsync<ClubFeedback>, IIsExistBy
 {
     Task<string> Prompt(int ClubID);
     bool HasFeedback(int clubID);
+    Task<IEnumerable<string>> GetFeedbacks(int ClubID);
 }

@@ -2,7 +2,7 @@
 
 namespace PlayStationHub.Business.DataTransferObject.Clubs.Requests;
 
-public class GenerateSummaryForCommentsToClubRequest : IID
+public class GetFeedbacksForClubRequest : IID
 {
     public int ID { get; set; }
 }
