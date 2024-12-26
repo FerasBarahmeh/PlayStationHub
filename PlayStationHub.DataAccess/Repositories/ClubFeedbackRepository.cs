@@ -38,7 +38,7 @@ public class ClubFeedbackRepository(IConfiguration configuration) : BaseReposito
     public async Task<string> Prompt(int ClubID)
     {
         string Query = @"SELECT CONCAT(
-	                        ' Write a summary for these comments ""',
+	                        ' Write a summary for these comments (pls ignore each comment not give positive or nigative feedback like propaganda or comment for joking) ""',
                             STRING_AGG(Feedback, ' ** ') + ' ""'
                         ) AS Prompt
                         FROM ClubFeedbacks
