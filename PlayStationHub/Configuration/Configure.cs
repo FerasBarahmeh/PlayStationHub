@@ -92,12 +92,5 @@ public static class Configure
         {
             options.DisableDataAnnotationsValidation = true;
         });
-        //builder.Services.AddControllers()
-        //    .AddFluentValidation(fv =>
-        //    {
-        //        fv.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-        //        fv.DisableDataAnnotationsValidation = true;
-        //    });
-
     }
 }

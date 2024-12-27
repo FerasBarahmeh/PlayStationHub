@@ -1,0 +1,16 @@
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\bin\Release\net8.0\PlayStationHub.DataAccess.deps.json
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\bin\Release\net8.0\PlayStationHub.DataAccess.dll
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\bin\Release\net8.0\PlayStationHub.DataAccess.pdb
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\bin\Release\net8.0\Utilities.dll
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\bin\Release\net8.0\Utilities.pdb
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.csproj.AssemblyReference.cache
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.AssemblyInfoInputs.cache
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.AssemblyInfo.cs
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.csproj.CoreCompileInputs.cache
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.sourcelink.json
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStat.C4E7D064.Up2Date
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.dll
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\refint\PlayStationHub.DataAccess.dll
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\PlayStationHub.DataAccess.pdb
+D:\Projects\PlayStationHub\PlayStationHub.DataAccess\obj\Release\net8.0\ref\PlayStationHub.DataAccess.dll
