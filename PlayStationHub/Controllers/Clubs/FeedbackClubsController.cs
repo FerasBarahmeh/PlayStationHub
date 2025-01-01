@@ -15,7 +15,7 @@ namespace PlayStationHub.API.Controllers.Clubs;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[AllowAnonymous]
 public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService _geminiService) : BaseController<IClubFeedbackService>(servic)
 {
     [HttpPost]
@@ -42,7 +42,7 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
     {
         try
         {
-            var result = await _geminiService.GenerateResponseAsync(request.ID);
+            var result = await _geminiService.GenerateResponseAsync(ClubFeedbackMapper.ToPromptParamsDto(request));
             
             var jsonObject = JsonDocument.Parse(result);
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PlayStationHub.Business.DataTransferObject.Clubs;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Text;
 using System.Text.Json;
@@ -23,9 +24,9 @@ public class GeminiService :  IGeminiService
         _ClubFeedbackService = clubFeedbackService;
     }
 
-    private async Task<object> GetFeedbacks(int ClubID)
+    private async Task<object> GetFeedbacks(PromptParamsDTO PromptParams)
     {
-        string prompt = await  _ClubFeedbackService.GeneratePrompt(ClubID);
+        string prompt = await  _ClubFeedbackService.GeneratePrompt(PromptParams);
         object request = new
         {
             contents = new[]
@@ -41,9 +42,9 @@ public class GeminiService :  IGeminiService
         return request;
     }
 
-    public async Task<string> GenerateResponseAsync(int ClubID)
+    public async Task<string> GenerateResponseAsync(PromptParamsDTO PromptParams)
     {
-        var _Request =  await GetFeedbacks(ClubID);
+        var _Request =  await GetFeedbacks(PromptParams);
         var jsonContent = JsonSerializer.Serialize(_Request);
         var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 

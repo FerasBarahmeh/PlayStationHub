@@ -15,7 +15,7 @@ namespace PlayStationHub.API.Controllers.Users;
 
 [Route("/api/[controller]")]
 [ApiController]
-[Authorize]
+[AllowAnonymous]
 public class UsersController : BaseController<IUserService>
 {
     private readonly ClaimsHelper _ClaimsHelper;

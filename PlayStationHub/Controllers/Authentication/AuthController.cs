@@ -12,7 +12,7 @@ namespace PlayStationHub.API.Controllers.Authentication;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[AllowAnonymous]
 public class AuthController(JwtOptions _JWTOptions, IAuthService service) : BaseController<IAuthService>(service)
 {
     [HttpPost("login")]

@@ -35,18 +35,22 @@ public class ClubFeedbackRepository(IConfiguration configuration) : BaseReposito
         });
     }
 
-    public async Task<string> Prompt(int ClubID)
+    public async Task<string> Prompt(PromptParams PromptParams)
     {
-        string Query = @"SELECT CONCAT(
-	                        ' Write a summary for these comments (pls ignore each comment not give positive or nigative feedback like propaganda or comment for joking) ""',
-                            STRING_AGG(Feedback, ' ** ') + ' ""'
-                        ) AS Prompt
-                        FROM ClubFeedbacks
-                        WHERE ClubID = @ClubID;
-                       ";
+        string Query = @"
+                SELECT CONCAT(
+                '@Prompt',
+                STRING_AGG(Feedback, '; ')
+                ) AS Prompt
+                FROM ClubFeedbacks
+                WHERE (ClubID = @ClubID) AND (ClubFeedbacks.CreatedAt BETWEEN CAST(@From AS DATETIME) AND CAST(@To AS DATETIME));
+        ";
         return await PredicateExecuteScalarAsync<string>(Query, async (SqlCommand cmd) =>
         {
-            cmd.Parameters.AddWithValue("@ClubID", ClubID);
+            cmd.Parameters.AddWithValue("@Prompt", PromptParams.Prompt);
+            cmd.Parameters.AddWithValue("@ClubID", PromptParams.ID);
+            cmd.Parameters.AddWithValue("@From", PromptParams.From);
+            cmd.Parameters.AddWithValue("@To", PromptParams.To);
             await Task.CompletedTask;
         });
     }

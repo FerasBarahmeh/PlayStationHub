@@ -29,4 +29,24 @@ public class ClubFeedbackMapper
             Status = ClubFeedback.Status,
         };
     }
+    public static PromptParamsDTO ToPromptParamsDto(GenerateSummaryForCommentsToClubRequest GetFeedbacksForClubRequest)
+    {
+        return new PromptParamsDTO
+        {
+            ID = GetFeedbacksForClubRequest.ID,
+            Prompt = GetFeedbacksForClubRequest.Prompt,
+            From = GetFeedbacksForClubRequest.From,
+            To = GetFeedbacksForClubRequest.To
+        };
+    }
+    public static PromptParams ToPromptParams(PromptParamsDTO PromptParams)
+    {
+        return new PromptParams
+        {
+            ID = PromptParams.ID,
+            Prompt = PromptParams.Prompt,
+            From = PromptParams.From,
+            To = PromptParams.To
+        };
+    }
 }
