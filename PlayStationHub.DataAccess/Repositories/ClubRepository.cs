@@ -16,6 +16,15 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
         });
     }
 
+    public async Task<Club> FindAsync(int ID)
+    {
+        return await PredicateExecuteReaderForOneRecordAsync("SELECT * FROM vw_Clubs where ClubID=@ClubID", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("ClubID", ID);
+            await Task.CompletedTask;
+        }, reader => ClubEntityGenerator.Generate(reader));
+    }
+
     public bool IsExist(int ID)
     {
         return PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Clubs Where ID=@ID;", async (SqlCommand cmd) =>
@@ -24,5 +33,6 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
             await Task.CompletedTask;
         });
     }
+
 }
 

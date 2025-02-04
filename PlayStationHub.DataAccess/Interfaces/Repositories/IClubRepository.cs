@@ -4,7 +4,7 @@ using PlayStationHub.Utilities.Interfaces.BasicOperation.Sync;
 
 namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
-public interface IClubRepository : IAllAsync<Club>, IIsExist
+public interface IClubRepository : IAllAsync<Club>, IIsExist, IFindAsync<Club>
 {
 
 }

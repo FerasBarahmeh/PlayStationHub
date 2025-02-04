@@ -79,7 +79,7 @@ public abstract class BaseRepository<T>
 
     #region Predicate Execute Scalar
     public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
-    {
+    {   
         ReturnType Result = default;
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
         {

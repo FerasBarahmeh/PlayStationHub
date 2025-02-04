@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.Business.DataTransferObject.Clubs;
-using PlayStationHub.Business.Enums;
+using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
 using PlayStationHub.Business.Interfaces.Services;
 using System.Net;
 using Utilities.Response;
@@ -19,5 +18,13 @@ public class ClubsController(IClubService servic) : BaseController<IClubService>
         if (clubs == null) return NoContent();
 
         return Ok(new ResponseOutcome<IEnumerable<ClubDTO>>(data: clubs, status: HttpStatusCode.OK, message: "Success fetch clubs"));
+    }
+
+    [HttpPost("Find")]
+    public async Task<ActionResult> Find(FindClubRequest request)
+    {
+        var club = await _Service.FindAsync(request.ID);
+
+        return Ok(new ResponseOutcome<ClubDTO>(data: club, status: HttpStatusCode.OK, message: "Success fetch clubs"));
     }
 }

@@ -21,4 +21,15 @@ public class ClubMapper
         }
         return result;
     }
+    public static ClubDTO ToClubDTO(Club club)
+    {
+        return (new ClubDTO
+        {
+            ID = club.ID,
+            Name = club.Name,
+            DeviceCount = club.DeviceCount,
+            Owner = club.Owner,
+            Location = club.Location
+        });
+    }
 }

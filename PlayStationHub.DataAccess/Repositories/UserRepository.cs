@@ -44,7 +44,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         return await PredicateExecuteReaderForOneRecordAsync(Query, async (SqlCommand cmd) =>
         {
             await Params(cmd);
-
             await Task.CompletedTask;
         }, reader =>
         {
