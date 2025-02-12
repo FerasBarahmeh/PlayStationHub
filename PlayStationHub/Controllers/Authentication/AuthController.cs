@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Authentication;
-using PlayStationHub.Business.DataTransferObject.Authentications;
 using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.Business.Requests.Authentications;
 using System.Net;
 using Utilities.Response;
 

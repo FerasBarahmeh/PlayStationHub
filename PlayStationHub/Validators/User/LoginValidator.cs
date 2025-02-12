@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using PlayStationHub.Business.DataTransferObject.Authentications;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.Business.Requests.Authentications;
 
 namespace PlayStationHub.API.Validators.User;
 

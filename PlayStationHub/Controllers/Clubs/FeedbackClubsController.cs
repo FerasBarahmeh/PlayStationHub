@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
-using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
-using PlayStationHub.Business.DataTransferObject.Clubs.Requests.interfaces;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Mappers;
+using PlayStationHub.Business.Requests.Clubs;
 using System.Net;
 using System.Text.Json;
 using Utilities.Response;
@@ -22,12 +21,12 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<IActionResult> Insert(InsertFeedbackRequest feedback)
     {
-       int id = await _Service.InsertAsync(ClubFeedbackMapper.ToClubFeedbackDTO(feedback));
-       return Ok(new ResponseOutcome<int>(data: id, status: HttpStatusCode.OK, "Successfully inserted comment"));
+        int id = await _Service.InsertAsync(ClubFeedbackMapper.ToClubFeedbackDTO(feedback));
+        return Ok(new ResponseOutcome<int>(data: id, status: HttpStatusCode.OK, "Successfully inserted comment"));
     }
 
     [HttpPost("GetFeedbacks")]
-    [ServiceFilter(typeof (ValidationFilterAttribute))]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     public async Task<ActionResult> GetFeedbacks(GetFeedbacksForClubRequest request)
     {
         IEnumerable<string> comments = await _Service.GetFeedbacks(request.ID);
@@ -43,7 +42,7 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
         try
         {
             var result = await _geminiService.GenerateResponseAsync(ClubFeedbackMapper.ToPromptParamsDto(request));
-            
+
             var jsonObject = JsonDocument.Parse(result);
 
             var textContent = jsonObject
@@ -55,7 +54,7 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
                 .GetString();
 
             var usageMetadata = jsonObject.RootElement.GetProperty("usageMetadata");
-           
+
             var tokenInfo = new Dictionary<string, object>
             {
                 { "PromptTokenCount", usageMetadata.GetProperty("promptTokenCount").GetInt32() },

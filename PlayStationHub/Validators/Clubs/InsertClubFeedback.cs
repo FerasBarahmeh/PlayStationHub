@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.Business.Requests.Clubs;
 
 namespace PlayStationHub.API.Validators.Clubs;
 

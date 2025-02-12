@@ -1,6 +1,6 @@
-﻿using PlayStationHub.Business.DataTransferObject.Clubs.Requests.interfaces;
+﻿using PlayStationHub.Business.Requests.Clubs.interfaces;
 
-namespace PlayStationHub.Business.DataTransferObject.Clubs.Requests;
+namespace PlayStationHub.Business.Requests.Clubs;
 
 public class GenerateSummaryForCommentsToClubRequest : IID
 {

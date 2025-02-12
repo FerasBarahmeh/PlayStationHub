@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.Business.DataTransferObject.Clubs;
-using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.Business.Requests.Clubs;
 using System.Net;
 using Utilities.Response;
 

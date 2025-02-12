@@ -1,5 +1,5 @@
 ﻿using PlayStationHub.Business.DataTransferObject.Users;
-using PlayStationHub.Business.DataTransferObject.Users.Requests;
+using PlayStationHub.Business.Requests.Users;
 using PlayStationHub.DataAccess.Entities;
 
 namespace PlayStationHub.Business.Mappers;

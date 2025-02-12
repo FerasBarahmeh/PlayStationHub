@@ -1,5 +1,5 @@
 ﻿using PlayStationHub.Business.DataTransferObject.Clubs;
-using PlayStationHub.Business.DataTransferObject.Clubs.Requests;
+using PlayStationHub.Business.Requests.Clubs;
 using PlayStationHub.DataAccess.Entities;
 
 namespace PlayStationHub.Business.Mappers;
@@ -13,7 +13,7 @@ public class ClubFeedbackMapper
             ID = ClubFeedback.ID ?? null,
             Feedback = ClubFeedback.Feedback,
             ClubID = ClubFeedback.ClubID,
-            Club   = ClubFeedback.Club,
+            Club = ClubFeedback.Club,
             CreatedAt = ClubFeedback.CreatedAt,
             Status = ClubFeedback.Status,
         };
