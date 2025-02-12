@@ -15,7 +15,7 @@ namespace PlayStationHub.API.Controllers.Users;
 
 [Route("/api/[controller]")]
 [ApiController]
-[AllowAnonymous]
+[Authorize(Roles = nameof(Privileges.Admin))]
 public class UsersController : BaseController<IUserService>
 {
     private readonly ClaimsHelper _ClaimsHelper;
@@ -44,7 +44,6 @@ public class UsersController : BaseController<IUserService>
 
     [HttpGet("Find/{ID}")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-    [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<IActionResult> Find(int ID)
     {
         var user = await _Service.FindAsync(ID);
@@ -110,7 +109,6 @@ public class UsersController : BaseController<IUserService>
 
 
     [HttpGet("Count")]
-    [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<IActionResult> UsersCount()
     {
         return Ok(new ResponseOutcome<int>(await _Service.CountRowsAsync(), HttpStatusCode.OK, ""));

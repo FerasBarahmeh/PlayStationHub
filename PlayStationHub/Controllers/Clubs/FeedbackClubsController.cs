@@ -14,7 +14,7 @@ namespace PlayStationHub.API.Controllers.Clubs;
 
 [Route("api/[controller]")]
 [ApiController]
-[AllowAnonymous]
+[Authorize(Roles = nameof(Privileges.Owner))]
 public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService _geminiService) : BaseController<IClubFeedbackService>(servic)
 {
     [HttpPost]
@@ -36,7 +36,6 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
 
     [HttpPost("GenerateSummary")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-    [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubRequest request)
     {
         try

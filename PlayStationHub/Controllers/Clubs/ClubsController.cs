@@ -12,6 +12,7 @@ namespace PlayStationHub.API.Controllers.Clubs;
 public class ClubsController(IClubService servic) : BaseController<IClubService>(servic)
 {
     [HttpGet]
+
     public async Task<ActionResult> All()
     {
         var clubs = await _Service.AllAsync();
