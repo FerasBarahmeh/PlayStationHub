@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace PlayStationHub.DataAccess.Entities;
+﻿namespace PlayStationHub.DataAccess.Entities;
 
 public class Club
 {
@@ -9,4 +7,5 @@ public class Club
     public string Location { get; set; }
     public Owner Owner { get; set; }
     public byte DeviceCount { get; set; }
+    public byte Status { get; set; }
 }

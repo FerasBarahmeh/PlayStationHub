@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using PlayStationHub.API.Authentication;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Requests.Users;
+using PlayStationHub.DTOs.User;
 
 namespace PlayStationHub.API.Validators.User;
 
-public class UpdateUserValidator : AbstractValidator<UpdateUserRequest>
+public class UpdateUserValidator : AbstractValidator<UpdateUserDto>
 {
     private readonly IUserService _UserService;
     private readonly ClaimsHelper _ClaimsHelper;

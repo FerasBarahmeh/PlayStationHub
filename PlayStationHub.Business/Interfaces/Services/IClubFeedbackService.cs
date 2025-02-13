@@ -1,12 +1,12 @@
-﻿using PlayStationHub.Business.DataTransferObject.Clubs;
+﻿using PlayStationHub.DTOs.Clubs;
 using PlayStationHub.Utilities.Interfaces.BasicOperation.Async;
 using PlayStationHub.Utilities.Interfaces.BasicOperation.Sync;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
-public interface IClubFeedbackService : IInsertAsync<ClubFeedbackDTO>, IIsExistByContent
+public interface IClubFeedbackService : IInsertAsync<ClubFeedbackDto>, IIsExistByContent
 {
-    Task<string> GeneratePrompt(PromptParamsDTO PromptParams);
+    Task<string> GeneratePrompt(PromptParamsDto PromptParams);
     bool HasFeedback(int clubID);
     Task<IEnumerable<string>> GetFeedbacks(int ClubID);
 }

@@ -1,4 +1,5 @@
 using PlayStationHub.API.Configuration;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,7 @@ Configure.AddControllers(ref builder);
 DependencyInjection.AddFilters(ref builder);
 DependencyInjection.AddServicesDependencies(ref builder);
 DependencyInjection.AddRepositoriesDependencies(ref builder);
-
-
+builder.Services.AddAutoMapper(Assembly.Load("PlayStationHub.Business"));
 
 var app = builder.Build();
 app.UseCors("AllowSpecificOrigin");

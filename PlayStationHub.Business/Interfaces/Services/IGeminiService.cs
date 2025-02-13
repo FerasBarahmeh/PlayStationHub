@@ -1,8 +1,8 @@
-﻿using PlayStationHub.Business.DataTransferObject.Clubs;
+﻿using PlayStationHub.DTOs.Clubs;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
 public interface IGeminiService
 {
-    Task<string> GenerateResponseAsync(PromptParamsDTO ClubID);
+    Task<string> GenerateResponseAsync(PromptParamsDto ClubID);
 }

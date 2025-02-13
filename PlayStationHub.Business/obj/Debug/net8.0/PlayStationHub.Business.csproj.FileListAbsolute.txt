@@ -49,3 +49,5 @@ D:\Projects\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationH
 D:\Projects\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\refint\PlayStationHub.Business.dll
 D:\Projects\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\PlayStationHub.Business.pdb
 D:\Projects\PlayStationHub\PlayStationHub.Business\obj\Debug\net8.0\ref\PlayStationHub.Business.dll
+D:\Projects\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DTOs.dll
+D:\Projects\PlayStationHub\PlayStationHub.Business\bin\Debug\net8.0\PlayStationHub.DTOs.pdb

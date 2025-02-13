@@ -1,4 +1,4 @@
-﻿namespace Utilities.Interfaces.BasicOperation.Async;
+﻿namespace PlayStationHub.Utilities.Interfaces.BasicOperation.Async;
 
 public interface ISaveAsync
 {

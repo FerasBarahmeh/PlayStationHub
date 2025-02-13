@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Requests.Authentications;
+using PlayStationHub.DTOs.Authentications;
 
 namespace PlayStationHub.API.Validators.User;
 
-public class LoginValidator : AbstractValidator<LoginRequest>
+public class LoginValidator : AbstractValidator<LoginDto>
 {
     private readonly IUserService _UserService;
     public LoginValidator(IUserService userService)

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Authentication;
-using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Requests.Authentications;
+using PlayStationHub.DTOs.Authentications;
+using PlayStationHub.DTOs.User;
 using System.Net;
 using Utilities.Response;
 
@@ -18,7 +18,7 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
     [HttpPost("login")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
     [AllowAnonymous]
-    public async Task<IActionResult> Login(LoginRequest Request)
+    public async Task<IActionResult> Login(LoginDto Request)
     {
         ResponseOutcome<string> Token = await _Service.LoginAsync(Request.Username, Request.Password);
         int? UserId = _Service.UserID;
@@ -56,9 +56,9 @@ public class AuthController(JwtOptions _JWTOptions, IAuthService service) : Base
     [HttpGet("AuthorizedUser")]
     public IActionResult AuthorizedUser()
     {
-        UserDTO user = _Service.AuthenticatedUser;
+        UserDto user = _Service.AuthenticatedUser;
         return user != null ?
-            Ok(new ResponseOutcome<UserDTO>(user, HttpStatusCode.OK, ""))
+            Ok(new ResponseOutcome<UserDto>(user, HttpStatusCode.OK, ""))
             : StatusCode((int)HttpStatusCode.NotFound, "Not Found the user");
     }
 

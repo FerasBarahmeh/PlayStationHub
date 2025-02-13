@@ -1,6 +1,6 @@
-﻿using PlayStationHub.Business.DataTransferObject.Privileges;
-using PlayStationHub.Business.DataTransferObject.Users;
-using PlayStationHub.Business.Enums;
+﻿using PlayStationHub.Business.Enums;
+using PlayStationHub.DTOs.Privileges;
+using PlayStationHub.DTOs.User;
 using PlayStationHub.Utilities.Interfaces.BasicOperation.Async;
 using PlayStationHub.Utilities.Interfaces.BasicOperation.Sync;
 
@@ -8,15 +8,15 @@ namespace PlayStationHub.Business.Interfaces.Services;
 
 
 public interface IUserService :
-    IIsExistAsync, IFindAsync<UserDTO>, IDeleteAsync<bool>, IIsExist, IPagedTableAsync<UserDTO>, ICountRowsAsync
+    IIsExistAsync, IFindAsync<UserDto>, IDeleteAsync<bool>, IIsExist, IPagedTableAsync<UserDto>, ICountRowsAsync
 {
-    public ModeStatus Mode { get; }
+    public EnmMode Mode { get; }
     public string Password { get; set; }
-    UserDTO UserModel { get; set; }
+    UserDto User { get; set; }
     Task<bool> IsExistAsync(string Username);
     bool IsExist(string Username);
-    Task<UserDTO> FindAsync(string Username);
+    Task<UserDto> FindAsync(string Username);
     Task<bool> SaveAsync();
-    Task<UserLoginDTO> GetUserCredentialsByUsernameAsync(string Username);
-    Task<IEnumerable<UserPrivilegeDTO>> GetUserPrivilege(int id);
+    Task<UserLoginDto> GetUserCredentialsByUsernameAsync(string Username);
+    Task<IEnumerable<UserPrivilegeDto>> GetUserPrivilege(int id);
 }

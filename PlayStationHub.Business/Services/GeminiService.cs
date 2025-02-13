@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
-using PlayStationHub.Business.DataTransferObject.Clubs;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.DTOs.Clubs;
 using System.Text;
 using System.Text.Json;
 
 namespace PlayStationHub.Business.Services;
 
-public class GeminiService :  IGeminiService
+public class GeminiService : IGeminiService
 {
     private readonly HttpClient _httpClient;
     private readonly string _BaseUrl;
@@ -24,9 +24,9 @@ public class GeminiService :  IGeminiService
         _ClubFeedbackService = clubFeedbackService;
     }
 
-    private async Task<object> GetFeedbacks(PromptParamsDTO PromptParams)
+    private async Task<object> GetFeedbacks(PromptParamsDto PromptParams)
     {
-        string prompt = await  _ClubFeedbackService.GeneratePrompt(PromptParams);
+        string prompt = await _ClubFeedbackService.GeneratePrompt(PromptParams);
         object request = new
         {
             contents = new[]
@@ -42,9 +42,9 @@ public class GeminiService :  IGeminiService
         return request;
     }
 
-    public async Task<string> GenerateResponseAsync(PromptParamsDTO PromptParams)
+    public async Task<string> GenerateResponseAsync(PromptParamsDto PromptParams)
     {
-        var _Request =  await GetFeedbacks(PromptParams);
+        var _Request = await GetFeedbacks(PromptParams);
         var jsonContent = JsonSerializer.Serialize(_Request);
         var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 

@@ -1,17 +1,18 @@
-﻿using PlayStationHub.Business.DataTransferObject.Privileges;
-using PlayStationHub.Business.DataTransferObject.Users;
+﻿using AutoMapper;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Mappers;
+using PlayStationHub.DataAccess.Entities;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
+using PlayStationHub.DTOs.Privileges;
+using PlayStationHub.DTOs.User;
 using Utilities.Security;
 
 namespace PlayStationHub.Business.Services;
 
 public class UserService : BaseService<IUserRepository>, IUserService
 {
-    public ModeStatus Mode => (UserModel.ID == null) ? ModeStatus.Insert : ModeStatus.Update;
-    public UserDTO UserModel { get; set; }
+    public EnmMode Mode => (User.ID == null) ? EnmMode.Insert : EnmMode.Update;
+    public UserDto User { get; set; }
 
     private string _Password;
     public string Password
@@ -24,7 +25,7 @@ public class UserService : BaseService<IUserRepository>, IUserService
         }
         set
         {
-            if (Mode == ModeStatus.Insert)
+            if (Mode == EnmMode.Insert)
             {
                 _Password = value;
                 return;
@@ -32,8 +33,11 @@ public class UserService : BaseService<IUserRepository>, IUserService
             _Password = null;
         }
     }
-
-    public UserService(IUserRepository repo) : base(repo) { }
+    private readonly IMapper _Mapper;
+    public UserService(IUserRepository repo, IMapper mapper) : base(repo)
+    {
+        _Mapper = mapper;
+    }
 
     public async Task<bool> IsExistAsync(string Username)
     {
@@ -47,46 +51,46 @@ public class UserService : BaseService<IUserRepository>, IUserService
     {
         return await _Repository.IsExistAsync(ID);
     }
-    public async Task<UserDTO> FindAsync(string Username)
+    public async Task<UserDto> FindAsync(string Username)
     {
-        var user = await _Repository.FindAsync(Username);
-        return UserMapper.ToUserDTO(user);
+        User user = await _Repository.FindAsync(Username);
+        return _Mapper.Map<UserDto>(user);
     }
-    public async Task<UserDTO> FindAsync(int ID)
+    public async Task<UserDto> FindAsync(int ID)
     {
-        var user = await _Repository.FindAsync(ID);
-        return UserMapper.ToUserDTO(user);
+        User user = await _Repository.FindAsync(ID);
+        return _Mapper.Map<UserDto>(user);
     }
     private async Task<int?> _Insert()
     {
-        var userForCreationDto = UserMapper.ToUserForCreation(UserModel);
-
-        userForCreationDto.Password = Password;
-        int? ID = await _Repository.InsertAsync(UserMapper.ToUser(userForCreationDto));
+        InsertUserDto insertFields = _Mapper.Map<InsertUserDto>(User);
+        insertFields.Password = Password;
+        User user = _Mapper.Map<User>(insertFields);
+        int? ID = await _Repository.InsertAsync(user);
 
         return ID;
     }
     private async Task<int?> _Update()
     {
-        var user = UserMapper.ToUser(UserModel);
+        User user = _Mapper.Map<User>(User);
         int? ID = await _Repository.UpdateAsync(user);
         return ID;
     }
     public async Task<bool> SaveAsync()
     {
-        if (Mode == ModeStatus.Insert)
+        if (Mode == EnmMode.Insert)
         {
             int? ID = await _Insert();
-            UserModel.ID = ID;
+            User.ID = ID;
             return ID != null;
         }
-        else if (Mode == ModeStatus.Update)
+        else if (Mode == EnmMode.Update)
         {
             int? RowsAffected = await _Update();
             if (RowsAffected is not null && RowsAffected > 0)
             {
-                var user = await _Repository.FindAsync((int)UserModel.ID);
-                UserModel = UserMapper.ToUserDTO(user);
+                User user = await _Repository.FindAsync((int)User.ID);
+                User = _Mapper.Map<UserDto>(user);
                 return true;
             }
         }
@@ -103,22 +107,21 @@ public class UserService : BaseService<IUserRepository>, IUserService
         return _Repository.IsExist(ID);
     }
 
-    public async Task<UserLoginDTO> GetUserCredentialsByUsernameAsync(string Username)
+    public async Task<UserLoginDto> GetUserCredentialsByUsernameAsync(string Username)
     {
-        var user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
-        return UserMapper.ToUserLoginDTO(user);
+        User user = await _Repository.GetUserCredentialsByUsernameAsync(Username);
+        return _Mapper.Map<UserLoginDto>(user);
     }
-    public async Task<IEnumerable<UserPrivilegeDTO>> GetUserPrivilege(int id)
+    public async Task<IEnumerable<UserPrivilegeDto>> GetUserPrivilege(int id)
     {
-        var privileges = await _Repository.GetUserPrivilege(id);
-        var privilegesNew = UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
-        return UserPrivilegeMapper.ToUserPrivilegeDTO(privileges);
+        IEnumerable<UserPrivilege> privileges = await _Repository.GetUserPrivilege(id);
+        return _Mapper.Map<IEnumerable<UserPrivilegeDto>>(privileges);
     }
 
-    public async Task<IEnumerable<UserDTO>> PagedTableAsync(int PageNumber, int PageSize)
+    public async Task<IEnumerable<UserDto>> PagedTableAsync(int PageNumber, int PageSize)
     {
-        var users = await _Repository.PagedTableAsync(PageNumber, PageSize);
-        return UserMapper.ToUserDTO(users);
+        IEnumerable<User> users = await _Repository.PagedTableAsync(PageNumber, PageSize);
+        return _Mapper.Map<IEnumerable<UserDto>>(users);
     }
 
     public async Task<int> CountRowsAsync()

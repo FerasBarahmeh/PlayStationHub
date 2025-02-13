@@ -4,7 +4,7 @@ using PlayStationHub.Business.Requests.Clubs;
 
 namespace PlayStationHub.API.Validators.Clubs;
 
-public class InsertClubFeedback : AbstractValidator<InsertFeedbackRequest>
+public class InsertClubFeedback : AbstractValidator<InsertFeedbackDto>
 {
     private readonly IClubFeedbackService _ClubFeedbackService;
     private readonly IClubService _ClubService;

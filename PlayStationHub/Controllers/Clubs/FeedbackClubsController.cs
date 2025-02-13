@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Mappers;
 using PlayStationHub.Business.Requests.Clubs;
+using PlayStationHub.DTOs.Clubs;
 using System.Net;
 using System.Text.Json;
 using Utilities.Response;
@@ -15,19 +16,19 @@ namespace PlayStationHub.API.Controllers.Clubs;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize(Roles = nameof(Privileges.Owner))]
-public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService _geminiService) : BaseController<IClubFeedbackService>(servic)
+public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService _geminiService, IMapper _Mapper) : BaseController<IClubFeedbackService>(servic)
 {
     [HttpPost]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-    public async Task<IActionResult> Insert(InsertFeedbackRequest feedback)
+    public async Task<IActionResult> Insert(InsertFeedbackDto feedback)
     {
-        int id = await _Service.InsertAsync(ClubFeedbackMapper.ToClubFeedbackDTO(feedback));
+        int id = await _Service.InsertAsync(_Mapper.Map<ClubFeedbackDto>(feedback));
         return Ok(new ResponseOutcome<int>(data: id, status: HttpStatusCode.OK, "Successfully inserted comment"));
     }
 
     [HttpPost("GetFeedbacks")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-    public async Task<ActionResult> GetFeedbacks(GetFeedbacksForClubRequest request)
+    public async Task<ActionResult> GetFeedbacks(GetFeedbacksForClubDto request)
     {
         IEnumerable<string> comments = await _Service.GetFeedbacks(request.ID);
 
@@ -36,11 +37,11 @@ public class FeedbackClubsController(IClubFeedbackService servic, IGeminiService
 
     [HttpPost("GenerateSummary")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-    public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubRequest request)
+    public async Task<IActionResult> GenerateSummary(GenerateSummaryForCommentsToClubDto request)
     {
         try
         {
-            var result = await _geminiService.GenerateResponseAsync(ClubFeedbackMapper.ToPromptParamsDto(request));
+            var result = await _geminiService.GenerateResponseAsync(_Mapper.Map<PromptParamsDto>(request));
 
             var jsonObject = JsonDocument.Parse(result);
 

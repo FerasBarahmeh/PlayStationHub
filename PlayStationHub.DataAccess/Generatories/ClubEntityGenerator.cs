@@ -18,7 +18,8 @@ public class ClubEntityGenerator
                 AddedBy = AdminEntityGenerator.Generate(reader, "Admin", "Admin"),
                 User = UserEntityGenerator.Generate(reader, "Owner"),
             },
-            DeviceCount = reader.GetByte(reader.GetOrdinal("DeviceCount"))
+            DeviceCount = reader.GetByte(reader.GetOrdinal("DeviceCount")),
+            Status = reader.GetByte(reader.GetOrdinal("ClubStatus"))
         };
     }
 }

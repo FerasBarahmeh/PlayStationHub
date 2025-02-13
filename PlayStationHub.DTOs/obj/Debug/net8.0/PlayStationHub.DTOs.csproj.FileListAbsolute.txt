@@ -1,0 +1,12 @@
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\bin\Debug\net8.0\PlayStationHub.DTOs.deps.json
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\bin\Debug\net8.0\PlayStationHub.DTOs.dll
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\bin\Debug\net8.0\PlayStationHub.DTOs.pdb
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.AssemblyInfoInputs.cache
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.AssemblyInfo.cs
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.csproj.CoreCompileInputs.cache
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.sourcelink.json
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.dll
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\refint\PlayStationHub.DTOs.dll
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\PlayStationHub.DTOs.pdb
+D:\Projects\PlayStationHub\PlayStationHub.DTOs\obj\Debug\net8.0\ref\PlayStationHub.DTOs.dll

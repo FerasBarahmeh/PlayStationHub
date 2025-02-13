@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.Business.Requests.Users;
+using PlayStationHub.DTOs.User;
 
 namespace PlayStationHub.API.Validators.User;
 
-public class InsertUserValidator : AbstractValidator<InsertUserRequest>
+public class InsertUserValidator : AbstractValidator<InsertUserDto>
 {
     private readonly IUserService _UserService;
     public InsertUserValidator(IUserService UserService)

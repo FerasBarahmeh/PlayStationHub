@@ -1,13 +1,13 @@
-﻿using PlayStationHub.Business.DataTransferObject.Privileges;
-using PlayStationHub.Business.DataTransferObject.Users;
+﻿using PlayStationHub.DTOs.Privileges;
+using PlayStationHub.DTOs.User;
 using Utilities.Response;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
 public interface IAuthService
 {
-    IEnumerable<UserPrivilegeDTO> Privileges { get; }
-    UserDTO AuthenticatedUser { get; }
+    IEnumerable<UserPrivilegeDto> Privileges { get; }
+    UserDto AuthenticatedUser { get; }
     public int? UserID { get; set; }
     bool IsAuthenticated { get; }
     bool IsAdmin { get; }

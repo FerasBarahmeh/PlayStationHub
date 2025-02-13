@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PlayStationHub.Business.Authentication;
-using PlayStationHub.Business.DataTransferObject.Privileges;
-using PlayStationHub.Business.DataTransferObject.Users;
 using PlayStationHub.Business.Interfaces.Services;
+using PlayStationHub.DTOs.Privileges;
+using PlayStationHub.DTOs.User;
 using System.Net;
 using Utilities.Response;
 using Utilities.Security;
@@ -14,8 +14,8 @@ public class AuthService : IAuthService
     private readonly IUserService _userService;
     private readonly JwtOptions _jwtOptions;
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private IEnumerable<UserPrivilegeDTO> _privileges;
-    private UserDTO _authenticatedUser;
+    private IEnumerable<UserPrivilegeDto> _privileges;
+    private UserDto _authenticatedUser;
 
     public AuthService(IServiceScopeFactory serviceScopeFactory, JwtOptions jwtOptions)
     {
@@ -26,8 +26,8 @@ public class AuthService : IAuthService
         _userService = scope.ServiceProvider.GetRequiredService<IUserService>();
     }
 
-    public IEnumerable<UserPrivilegeDTO> Privileges => _privileges;
-    public UserDTO AuthenticatedUser => _authenticatedUser;
+    public IEnumerable<UserPrivilegeDto> Privileges => _privileges;
+    public UserDto AuthenticatedUser => _authenticatedUser;
     public int? UserID { get; set; }
     public bool IsAuthenticated => UserID != null && _authenticatedUser != null;
 
@@ -73,7 +73,7 @@ public class AuthService : IAuthService
         return _privileges?.Any(privilege => privilege.Name == privilegeName) ?? false;
     }
 
-    private async Task InitializeSessionAsync(UserDTO user)
+    private async Task InitializeSessionAsync(UserDto user)
     {
         UserID = user.ID;
         _authenticatedUser = user;

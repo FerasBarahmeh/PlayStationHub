@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayStationHub.Business", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayStationHub.DataAccess", "..\PlayStationHub.DataAccess\PlayStationHub.DataAccess.csproj", "{F2D2C8BD-D2DA-427E-8F1B-D1A9505C8BD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities.csproj", "{7DD4B407-1759-41D6-BFB3-AE7D4CA8B6DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\Utilities\Utilities.csproj", "{7DD4B407-1759-41D6-BFB3-AE7D4CA8B6DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayStationHub.DTOs", "..\PlayStationHub.DTOs\PlayStationHub.DTOs.csproj", "{105B61D3-71AD-4B20-AA16-D4186D0A7A50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7DD4B407-1759-41D6-BFB3-AE7D4CA8B6DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DD4B407-1759-41D6-BFB3-AE7D4CA8B6DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DD4B407-1759-41D6-BFB3-AE7D4CA8B6DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105B61D3-71AD-4B20-AA16-D4186D0A7A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105B61D3-71AD-4B20-AA16-D4186D0A7A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105B61D3-71AD-4B20-AA16-D4186D0A7A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105B61D3-71AD-4B20-AA16-D4186D0A7A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
