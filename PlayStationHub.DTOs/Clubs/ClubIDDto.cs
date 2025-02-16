@@ -1,6 +1,8 @@
-﻿namespace PlayStationHub.DTOs.Clubs;
+﻿using PlayStationHub.DTOs.Clubs.interfaces;
 
-public class ClubIDDto
+namespace PlayStationHub.DTOs.Clubs;
+
+public class ClubIDDto : IID
 {
     public int ID { get; set; }
 }
