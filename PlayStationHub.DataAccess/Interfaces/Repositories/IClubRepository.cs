@@ -7,5 +7,5 @@ namespace PlayStationHub.DataAccess.Interfaces.Repositories;
 
 public interface IClubRepository : IAllAsync<Club>, IIsExist, IIsExistByContent, IFindAsync<Club>, IInsertAsync<Club>, ISoftDeleteAsync
 {
-    Task<IEnumerable<Club>> GetUserClubs(int UserID);
+    Task<IEnumerable<Club>> GetUserClubsHighlights(int UserID);
 }

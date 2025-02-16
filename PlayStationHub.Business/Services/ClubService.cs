@@ -54,9 +54,9 @@ public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseServ
     {
         return await _Repository.SoftDeleteAsync(ID);
     }
-    public async Task<IEnumerable<ClubDto>> GetUserClubs(int UserID)
+    public async Task<IEnumerable<ClubCoreDto>> GetUserClubsHighlights(int UserID)
     {
-        IEnumerable<Club> Clubs = await _Repository.GetUserClubs(UserID);
-        return _Mapper.Map<IEnumerable<ClubDto>>(Clubs);
+        IEnumerable<Club> Clubs = await _Repository.GetUserClubsHighlights(UserID);
+        return _Mapper.Map<IEnumerable<ClubCoreDto>>(Clubs);
     }
 }

@@ -23,8 +23,14 @@ public class ClubProfile : Profile
     {
         CreateMap<Club, ClubDto>()
             .ForMember(dest => dest.StatusName, opt => opt.MapFrom<StatusNameResolver>());
+
         CreateMap<ClubDto, Club>();
+
         CreateMap<InsertClubDto, ClubDto>()
           .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => new Owner { ID = src.OwnerID }));
+
+        CreateMap<Club, ClubCoreDto>()
+            .ForMember(dest => dest.UserID, opt => opt.MapFrom(src => src.Owner.User.ID))
+            .ForMember(dest => dest.ClubID, opt => opt.MapFrom(src => src.ID));
     }
 }

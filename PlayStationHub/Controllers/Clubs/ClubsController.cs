@@ -13,7 +13,7 @@ namespace PlayStationHub.API.Controllers.Clubs;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ClubsController(IClubService service, IMapper _Mapper, IAuthService _AuthService) : BaseController<IClubService>(service)
+public class ClubsController(IClubService service, IMapper _Mapper) : BaseController<IClubService>(service)
 {
     [HttpGet]
     public async Task<ActionResult> All()
@@ -76,9 +76,9 @@ public class ClubsController(IClubService service, IMapper _Mapper, IAuthService
     }
 
 
-    [HttpGet("GetAuthenticatedUserClub")]
+    [HttpGet("GetAuthenticatedUserClubsHighlights")]
     [Authorize(Roles = nameof(Privileges.Owner))]
-    public async Task<ActionResult<IEnumerable<ClubDto>>> GetAuthenticatedUserClub()
+    public async Task<ActionResult<IEnumerable<ClubCoreDto>>> GetAuthenticatedUserClubsHighlights()
     {
         if (User == null)
             return Unauthorized();
@@ -88,7 +88,7 @@ public class ClubsController(IClubService service, IMapper _Mapper, IAuthService
         if (!int.TryParse(userId, out int userIdInt))
             return BadRequest("Invalid user ID format.");
 
-        IEnumerable<ClubDto> Clubs = await _Service.GetUserClubs(userIdInt);
-        return Ok(new ResponseOutcome<IEnumerable<ClubDto>>(data: Clubs, status: HttpStatusCode.OK, message: "this is you active clubs you own it."));
+        IEnumerable<ClubCoreDto> Clubs = await _Service.GetUserClubsHighlights(userIdInt);
+        return Ok(new ResponseOutcome<IEnumerable<ClubCoreDto>>(data: Clubs, status: HttpStatusCode.OK, message: "this is you active clubs you own it."));
     }
 }

@@ -22,10 +22,10 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
         );
     }
 
-    public async Task<IEnumerable<Club>> GetUserClubs(int UserID)
+    public async Task<IEnumerable<Club>> GetUserClubsHighlights(int UserID)
     {
         return await PredicateExecuteReaderAsync(
-            "select * from vw_Clubs WHERE OwnerUserID = @OwnerUserID AND ClubStatus = 2;",
+            "SELECT * FROM vw_GetActiveClubs WHERE OwnerUserID = @OwnerUserID;",
             (SqlCommand cmd) => cmd.Parameters.AddWithValue("@OwnerUserID", UserID),
             ClubEntityGenerator.Generate
         );
