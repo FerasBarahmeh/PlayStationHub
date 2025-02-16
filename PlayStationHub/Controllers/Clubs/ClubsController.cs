@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PlayStationHub.API.Filters;
 using PlayStationHub.Business.Enums;
 using PlayStationHub.Business.Interfaces.Services;
 using PlayStationHub.Business.Requests.Clubs;
@@ -24,6 +25,7 @@ public class ClubsController(IClubService service, IMapper _Mapper) : BaseContro
     }
 
     [HttpPost("Insert")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
     [Authorize(Roles = nameof(Privileges.Admin))]
     public async Task<ActionResult> Insert(InsertClubDto insertClubDto)
     {

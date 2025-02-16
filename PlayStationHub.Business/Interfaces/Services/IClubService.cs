@@ -4,7 +4,7 @@ using PlayStationHub.Utilities.Interfaces.BasicOperation.Sync;
 
 namespace PlayStationHub.Business.Interfaces.Services;
 
-public interface IClubService : IAllAsync<ClubDto>, IIsExist, IFindAsync<ClubDto>, ISaveAsync
+public interface IClubService : IAllAsync<ClubDto>, IIsExist, IIsExistByContent, IFindAsync<ClubDto>, ISaveAsync
 {
     ClubDto Club { get; set; }
 }

@@ -31,9 +31,9 @@ public class AuthService : IAuthService
     public int? UserID { get; set; }
     public bool IsAuthenticated => UserID != null && _authenticatedUser != null;
 
-    public bool IsAdmin => HasPrivilege(Enums.Privileges.Admin.ToString());
-    public bool IsOwner => HasPrivilege(Enums.Privileges.Owner.ToString());
-    public bool IsUser => HasPrivilege(Enums.Privileges.User.ToString());
+    public bool IsAdmin => HasPrivilege(Enums.Privileges.Admin);
+    public bool IsOwner => HasPrivilege(Enums.Privileges.Owner);
+    public bool IsUser => HasPrivilege(Enums.Privileges.User);
 
     public async Task<ResponseOutcome<string>> LoginAsync(string username, string password)
     {
@@ -68,8 +68,9 @@ public class AuthService : IAuthService
         }
     }
 
-    private bool HasPrivilege(string privilegeName)
+    private bool HasPrivilege(Enums.Privileges privilege)
     {
+        string privilegeName = privilege.ToString();
         return _privileges?.Any(privilege => privilege.Name == privilegeName) ?? false;
     }
 

@@ -1,16 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
-using PlayStationHub.DataAccess.Generatories;
+using PlayStationHub.DataAccess.Generators;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 
 namespace PlayStationHub.DataAccess.Repositories;
 
-public class UserRepository : BaseRepository<User>, IUserRepository
+public class UserRepository(IConfiguration configuration) : BaseRepository<User>(configuration), IUserRepository
 {
-    public UserRepository(IConfiguration configuration) : base(configuration) { }
-
     public async Task<IEnumerable<User>> PagedTableAsync(int PageNumber, int PageSize)
     {
         return await PagedTableAsync("SELECT * FROM vw_Users  ORDER BY ID", PageNumber, PageSize, reader => UserEntityGenerator.Generate(reader));
@@ -45,10 +43,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         {
             await Params(cmd);
             await Task.CompletedTask;
-        }, reader =>
-        {
-            return UserEntityGenerator.Generate(reader);
-        });
+        }, UserEntityGenerator.Generate);
     }
     public async Task<User> FindAsync(int ID)
     {

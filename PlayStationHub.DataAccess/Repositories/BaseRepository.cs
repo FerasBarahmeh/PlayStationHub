@@ -78,14 +78,14 @@ public abstract class BaseRepository<T>
     #endregion
 
     #region Predicate Execute Scalar
-    public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Func<SqlCommand, Task> SetParameters)
-    {   
+    public async Task<ReturnType> PredicateExecuteScalarAsync<ReturnType>(string Query, Action<SqlCommand> SetParameters)
+    {
         ReturnType Result = default;
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand(Query, conn))
             {
-                await SetParameters(cmd);
+                SetParameters(cmd);
                 await conn.OpenAsync();
                 object ScalerResult = await cmd.ExecuteScalarAsync();
 
@@ -132,14 +132,14 @@ public abstract class BaseRepository<T>
     #endregion
 
     #region Predicate execure reader for one recored
-    public async Task<T> PredicateExecuteReaderForOneRecordAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
+    public async Task<T> PredicateExecuteReaderForOneRecordAsync(string Query, Action<SqlCommand> SetParameters, Func<SqlDataReader, T> Logic)
     {
         T Record = default;
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand(Query, conn))
             {
-                await SetParameters(cmd);
+                SetParameters(cmd);
                 await conn.OpenAsync();
                 using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                 {

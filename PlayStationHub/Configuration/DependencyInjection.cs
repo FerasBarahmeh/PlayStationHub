@@ -16,12 +16,14 @@ public static class DependencyInjection
         builder.Services.AddScoped<IClubService, ClubService>();
         builder.Services.AddScoped<IClubFeedbackService, ClubFeedbackService>();
         builder.Services.AddScoped<IGeminiService, GeminiService>();
+        builder.Services.AddScoped<IOwnerService, OwnerService>();
     }
     public static void AddRepositoriesDependencies(ref WebApplicationBuilder builder)
     {
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IClubRepository, ClubRepository>();
         builder.Services.AddScoped<IClubFeedbackRepository, ClubFeedbackRepository>();
+        builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
     }
 
     public static void AddFilters(ref WebApplicationBuilder builder)

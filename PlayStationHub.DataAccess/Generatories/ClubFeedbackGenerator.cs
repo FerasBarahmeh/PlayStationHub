@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using PlayStationHub.DataAccess.Entities;
 
-namespace PlayStationHub.DataAccess.Generatories;
+namespace PlayStationHub.DataAccess.Generators;
 
 public class ClubFeedbackGenerator
 {

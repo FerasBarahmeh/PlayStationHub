@@ -29,7 +29,10 @@ public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseServ
     {
         return _Repository.IsExist(ID);
     }
-
+    public bool IsExist(string Name)
+    {
+        return _Repository.IsExist(Name);
+    }
     private async Task<int> _Insert()
     {
         Club club = _Mapper.Map<Club>(Club);

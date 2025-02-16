@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
-using PlayStationHub.DataAccess.Generatories;
+using PlayStationHub.DataAccess.Generators;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 
 namespace PlayStationHub.DataAccess.Repositories;
@@ -51,6 +51,13 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
             await Task.CompletedTask;
         });
     }
-
+    public bool IsExist(string Name)
+    {
+        return PredicateExecuteScalar<bool>("SELECT Founded = 1 FROM Clubs Where Name=@Name;", async (SqlCommand cmd) =>
+        {
+            cmd.Parameters.AddWithValue("@Name", Name);
+            await Task.CompletedTask;
+        });
+    }
 }
 

@@ -3,6 +3,6 @@
 public enum EnmStatus : byte
 {
     Unknown = 0,
-    Active,
-    Inactive,
+    Inactive = 1,
+    Active = 2,
 }

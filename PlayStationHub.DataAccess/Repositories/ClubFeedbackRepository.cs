@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PlayStationHub.DataAccess.Entities;
-using PlayStationHub.DataAccess.Generatories;
+using PlayStationHub.DataAccess.Generators;
 using PlayStationHub.DataAccess.Interfaces.Repositories;
 using System.Data;
 
