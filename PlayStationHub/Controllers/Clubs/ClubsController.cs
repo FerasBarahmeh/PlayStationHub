@@ -47,4 +47,31 @@ public class ClubsController(IClubService service, IMapper _Mapper) : BaseContro
 
         return Ok(new ResponseOutcome<ClubDto>(data: club, status: HttpStatusCode.OK, message: "Success fetch clubs"));
     }
+
+    [HttpPatch("SoftDelete")]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    [Authorize(Roles = nameof(Privileges.Admin))]
+    public async Task<ActionResult> SoftDelete(ClubIDDto ID)
+    {
+        try
+        {
+            int rowAffected = await _Service.SoftDeleteAsync(ID.ID);
+            if (rowAffected == 1)
+                return Ok(new ResponseOutcome<object>(data: new { ID.ID, Response = true, rowAffected }, status: HttpStatusCode.OK, message: "success delete club, this club is inactive now but you can see all previous information about it."));
+            else if (rowAffected == 0)
+                return Ok(new ResponseOutcome<object>(data: new { ID.ID, Response = false, rowAffected }, status: HttpStatusCode.OK, message: "no changes made. Club status is already inactive"));
+
+            return StatusCode(
+               StatusCodes.Status500InternalServerError,
+                   new NullableResponseData(HttpStatusCode.InternalServerError, "An internal server error occurred. Please try again later.")
+               );
+        }
+        catch (Exception)
+        {
+            return StatusCode(
+            StatusCodes.Status500InternalServerError,
+                new NullableResponseData(HttpStatusCode.InternalServerError, "An internal server error occurred. Please try again later.")
+            );
+        }
+    }
 }

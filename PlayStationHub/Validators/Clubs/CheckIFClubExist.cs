@@ -1,23 +1,24 @@
 ﻿using FluentValidation;
 using PlayStationHub.Business.Interfaces.Services;
-using PlayStationHub.DTOs.Clubs.interfaces;
+using PlayStationHub.DTOs.Clubs;
 
 namespace PlayStationHub.API.Validators.Clubs;
 
-public class CheckIFClubExist : AbstractValidator<IID>
+public class CheckIfClubExist : AbstractValidator<ClubIDDto>
 {
-    private readonly IClubFeedbackService _ClubFeedbackService;
-    public CheckIFClubExist(IClubFeedbackService clubFeedbackService)
+    private readonly IClubService _ClubService;
+    public CheckIfClubExist(IClubService clubService)
     {
-        _ClubFeedbackService = clubFeedbackService;
+        _ClubService = clubService;
+
         RuleFor(u => u.ID)
         .NotNull()
         .NotEmpty()
-        .Must(_IsClubHasFeedback).WithMessage("this club not exist or the club dosn't has feedback yet");
+        .Must(_IsClubHasFeedback).WithMessage("this club not exist or the club");
     }
 
     private bool _IsClubHasFeedback(int ClubID)
     {
-        return _ClubFeedbackService.HasFeedback(ClubID);
+        return _ClubService.IsExist(ClubID);
     }
 }

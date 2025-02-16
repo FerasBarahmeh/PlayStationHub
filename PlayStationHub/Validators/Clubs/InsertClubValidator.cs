@@ -16,14 +16,14 @@ public class InsertClubValidator : AbstractValidator<InsertClubDto>
         _ClubService = ClubService;
         _OwnerService = ownerService;
 
-        RuleFor(owner => owner.Name)
+        RuleFor(club => club.Name)
         .NotNull()
         .NotEmpty()
         .MinimumLength(5)
         .MaximumLength(100)
         .Must(_BeUniqueClubName).WithMessage("chose unique name for club, this name already used.");
 
-        RuleFor(owner => owner.Location)
+        RuleFor(club => club.Location)
         .NotNull()
         .NotEmpty()
         .MinimumLength(5)
@@ -35,7 +35,7 @@ public class InsertClubValidator : AbstractValidator<InsertClubDto>
         .GreaterThan(0).WithMessage("OwnerID must be greater than 0.")
         .Must(_IsOwnerExist).WithMessage("the owner is not exist");
 
-        RuleFor(owner => owner.Status)
+        RuleFor(club => club.Status)
             .NotNull()
             .NotEmpty()
             .Must(EnumsValidator.IsDefinedInEnum<EnmStatus, byte>).WithMessage("in valid status value");
@@ -43,7 +43,7 @@ public class InsertClubValidator : AbstractValidator<InsertClubDto>
 
     private bool _BeUniqueClubName(string Name)
     {
-        return _ClubService.IsExist(Name);
+        return !_ClubService.IsExist(Name);
     }
     private bool _IsOwnerExist(int ID)
     {

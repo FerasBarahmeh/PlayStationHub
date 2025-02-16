@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7332b6ef5c654e6adc6f0eed0037ec1039d760af")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57add14bd7f4fea7dd918f3e7ea53862b4f64c5b")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlayStationHub.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

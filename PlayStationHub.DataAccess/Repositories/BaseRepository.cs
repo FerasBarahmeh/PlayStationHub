@@ -155,7 +155,7 @@ public abstract class BaseRepository<T>
     #endregion
 
     #region Predicate execute non query
-    public async Task<int> PredicateExecuteNonQueryAsync(string Query, Func<SqlCommand, Task> SetParams)
+    public async Task<int> PredicateExecuteNonQueryAsync(string Query, Action<SqlCommand> SetParams)
     {
         int RowAffected = 0;
 
@@ -163,7 +163,7 @@ public abstract class BaseRepository<T>
         {
             using (SqlCommand cmd = new SqlCommand(Query, conn))
             {
-                await SetParams(cmd);
+                SetParams(cmd);
                 await conn.OpenAsync();
                 RowAffected = await cmd.ExecuteNonQueryAsync();
             }

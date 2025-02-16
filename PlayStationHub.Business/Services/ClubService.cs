@@ -9,8 +9,6 @@ namespace PlayStationHub.Business.Services;
 
 public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseService<IClubRepository>(Repository), IClubService
 {
-    private EnmMode _mode => Club == null ? EnmMode.Insert : EnmMode.Update;
-
     public ClubDto Club { get; set; }
 
     public async Task<IEnumerable<ClubDto>> AllAsync()
@@ -52,5 +50,10 @@ public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseServ
                 return true;
         }
         return false;
+    }
+
+    public async Task<int> SoftDeleteAsync(int ID)
+    {
+        return await _Repository.SoftDeleteAsync(ID);
     }
 }

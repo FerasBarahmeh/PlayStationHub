@@ -59,5 +59,9 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
             await Task.CompletedTask;
         });
     }
+    public async Task<int> SoftDeleteAsync(int ID)
+    {
+        return await PredicateExecuteNonQueryAsync("UPDATE Clubs SET ClubStatus = 1 WHERE ID = @ID AND ClubStatus != 1;", (SqlCommand cmd) => cmd.Parameters.AddWithValue("@ID", ID));
+    }
 }
 
