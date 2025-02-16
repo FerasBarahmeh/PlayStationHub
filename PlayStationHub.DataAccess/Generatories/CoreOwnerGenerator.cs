@@ -12,7 +12,7 @@ namespace PlayStationHub.DataAccess.Generators
                 ID = reader.GetInt32(reader.GetOrdinal("OwnerID")),
                 User = new User
                 {
-                    ID = reader.GetInt32(reader.GetOrdinal("OwnerID")),
+                    ID = reader.GetInt32(reader.GetOrdinal("UserID")),
                     Username = reader.GetString(reader.GetOrdinal("OwnerUsername")),
                 },
             };
