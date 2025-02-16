@@ -8,4 +8,5 @@ namespace PlayStationHub.Business.Interfaces.Services;
 public interface IClubService : IAllAsync<ClubDto>, IIsExist, IIsExistByContent, IFindAsync<ClubDto>, ISaveAsync, ISoftDeleteAsync
 {
     ClubDto Club { get; set; }
+    Task<IEnumerable<ClubDto>> GetUserClubs(int UserID);
 }

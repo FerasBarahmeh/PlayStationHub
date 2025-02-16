@@ -22,6 +22,15 @@ public class ClubRepository(IConfiguration configuration) : BaseRepository<Club>
         );
     }
 
+    public async Task<IEnumerable<Club>> GetUserClubs(int UserID)
+    {
+        return await PredicateExecuteReaderAsync(
+            "select * from vw_Clubs WHERE OwnerUserID = @OwnerUserID AND ClubStatus = 2;",
+            (SqlCommand cmd) => cmd.Parameters.AddWithValue("@OwnerUserID", UserID),
+            ClubEntityGenerator.Generate
+        );
+    }
+
     public async Task<int> InsertAsync(Club InsertField)
     {
         string sql = @"

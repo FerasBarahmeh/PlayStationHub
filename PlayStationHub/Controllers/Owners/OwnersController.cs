@@ -10,7 +10,7 @@ namespace PlayStationHub.API.Controllers.Owners;
 
 [Route("api/[controller]")]
 [ApiController]
-public class OwnersController(IOwnerService service) : BaseController<IOwnerService>(service)
+public class OwnersController(IOwnerService service, IAuthService _AuthService) : BaseController<IOwnerService>(service)
 {
     [HttpGet("GetOwnersCoreDetails")]
     [Authorize(Roles = nameof(Privileges.Admin))]

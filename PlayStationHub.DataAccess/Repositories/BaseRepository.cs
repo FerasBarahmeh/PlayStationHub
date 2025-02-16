@@ -33,14 +33,14 @@ public abstract class BaseRepository<T>
         }
         return Records;
     }
-    public async Task<IEnumerable<T>> PredicateExecuteReaderAsync(string Query, Func<SqlCommand, Task> SetParameters, Func<SqlDataReader, T> Logic)
+    public async Task<IEnumerable<T>> PredicateExecuteReaderAsync(string Query, Action<SqlCommand> SetParameters, Func<SqlDataReader, T> Logic)
     {
         List<T> Records = new List<T>();
         using (SqlConnection conn = new SqlConnection(_ConnectionString))
         {
             using (SqlCommand cmd = new SqlCommand(Query, conn))
             {
-                await SetParameters(cmd);
+                SetParameters(cmd);
                 await conn.OpenAsync();
                 using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                 {

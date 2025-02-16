@@ -37,7 +37,6 @@ public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseServ
         int id = await _Repository.InsertAsync(club);
         return id;
     }
-
     public async Task<bool> SaveAsync()
     {
         switch (_Mode)
@@ -51,9 +50,13 @@ public class ClubService(IClubRepository Repository, IMapper _Mapper) : BaseServ
         }
         return false;
     }
-
     public async Task<int> SoftDeleteAsync(int ID)
     {
         return await _Repository.SoftDeleteAsync(ID);
+    }
+    public async Task<IEnumerable<ClubDto>> GetUserClubs(int UserID)
+    {
+        IEnumerable<Club> Clubs = await _Repository.GetUserClubs(UserID);
+        return _Mapper.Map<IEnumerable<ClubDto>>(Clubs);
     }
 }

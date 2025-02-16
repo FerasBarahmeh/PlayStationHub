@@ -13,7 +13,7 @@ namespace PlayStationHub.API.Controllers.Clubs;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ClubsController(IClubService service, IMapper _Mapper) : BaseController<IClubService>(service)
+public class ClubsController(IClubService service, IMapper _Mapper, IAuthService _AuthService) : BaseController<IClubService>(service)
 {
     [HttpGet]
     public async Task<ActionResult> All()
@@ -73,5 +73,22 @@ public class ClubsController(IClubService service, IMapper _Mapper) : BaseContro
                 new NullableResponseData(HttpStatusCode.InternalServerError, "An internal server error occurred. Please try again later.")
             );
         }
+    }
+
+
+    [HttpGet("GetAuthenticatedUserClub")]
+    [Authorize(Roles = nameof(Privileges.Owner))]
+    public async Task<ActionResult<IEnumerable<ClubDto>>> GetAuthenticatedUserClub()
+    {
+        if (User == null)
+            return Unauthorized();
+
+        var userId = User.Claims.FirstOrDefault(c => c.Type == "ID")?.Value;
+
+        if (!int.TryParse(userId, out int userIdInt))
+            return BadRequest("Invalid user ID format.");
+
+        IEnumerable<ClubDto> Clubs = await _Service.GetUserClubs(userIdInt);
+        return Ok(new ResponseOutcome<IEnumerable<ClubDto>>(data: Clubs, status: HttpStatusCode.OK, message: "this is you active clubs you own it."));
     }
 }
